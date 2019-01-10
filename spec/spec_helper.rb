@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+require 'simplecov'
+
+SimpleCov.start do
+  minimum_coverage 95
+end
+
+require_relative '../autoload.rb'
+require 'rspec'
 require 'bundler/setup'
 require 'c_codebreaker'
 
