@@ -7,9 +7,10 @@ class Renderer
   end
 
   def message(msg_name, hash = {})
-    return [I18n.t(msg_name, hash), 'test message'] if @game_mode == WEB
+    return 'test_message' if @game_mode == WEB
 
     puts I18n.t(msg_name, hash)
+    'console mode'
   end
 
   def start_message
