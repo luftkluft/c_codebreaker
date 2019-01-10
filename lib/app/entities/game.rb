@@ -43,7 +43,7 @@ class Game
     @attempts = 0
   end
 
-  def setup_game_mode(mode = 'console')
+  def setup_game_mode(mode = CONSOLE)
     if mode == WEB
       @game_mode = WEB
       @renderer.game_mode = WEB
