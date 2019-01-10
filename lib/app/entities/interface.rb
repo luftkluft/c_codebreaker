@@ -7,7 +7,7 @@ class Interface
   end
 
   def setup_web_mode
-    @game.game_mode(WEB)
+    @game.setup_game_mode(WEB)
   end
 
   def game_menu
