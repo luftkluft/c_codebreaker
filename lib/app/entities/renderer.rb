@@ -18,7 +18,8 @@ class Renderer
   end
 
   def rules
-    put_data([I18n.t('goodbye_message')]) and return if @game_mode == WEB
+    m = I18n.t('goodbye_message')
+    put_data([m]) and return if @game_mode == WEB
     message(:rules)
   end
 
