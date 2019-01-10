@@ -37,6 +37,6 @@ module DataStorage
       File.delete(FILE_STORE)
       data
     end
-    'store is empty'
+    ['store is empty']
   end
 end
