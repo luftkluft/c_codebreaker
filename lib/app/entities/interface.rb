@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class Interface
-  attr_accessor :game
+  include Store
+  attr_reader :game
   def initialize
     @game = Game.new
   end
 
-  def setup_web_mode
-    @game.setup_game_mode(WEB)
+  def setup_web_mode(mode = WEB)
+    @game.game_mode(mode)
   end
 
   def game_menu
@@ -20,6 +21,7 @@ class Interface
 
   def rules
     @game.rules
+    read_data
   end
 
   def stats

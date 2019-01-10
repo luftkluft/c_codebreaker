@@ -43,7 +43,7 @@ class Game
     @attempts = 0
   end
 
-  def setup_game_mode(mode = CONSOLE)
+  def setup_game_mode(mode = 'console')
     if mode == WEB
       @game_mode = WEB
       @renderer.game_mode = WEB
@@ -57,17 +57,13 @@ class Game
   end
 
   def stats
-    return @statistics.get_stats(load) if @game_mode == WEB
-    
     @statistics.get_stats(load)
-    game_menu
+    game_menu unless @game_mode == WEB
   end
 
   def rules
-    return @renderer.rules if @game_mode == WEB
-
     @renderer.rules
-    game_menu
+    game_menu unless @game_mode == WEB
   end
 
   # private
