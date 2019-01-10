@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Interface
-  include Store
+  include DataStorage
   attr_reader :game
   def initialize
     @game = Game.new
@@ -21,7 +21,7 @@ class Interface
 
   def rules
     @game.rules
-    read_data
+    send_data
   end
 
   def stats

@@ -2,6 +2,7 @@
 
 module DataStorage
   FILE_NAME = 'database/data.yml'
+  FILE_STORE = 'database/store.yml'
 
   def create
     File.new(FILE_NAME, 'w')
@@ -23,5 +24,15 @@ module DataStorage
   def save_game_result(object)
     create unless storage_exist?
     save(load.push(object))
+  end
+
+  def put_data(object)
+    File.new(FILE_STORE, 'w') unless File.exist?(FILE_STORE)
+    File.open(FILE_STORE, 'w') { |file| file.write object.to_yaml }
+  end
+
+  def send_data
+    return YAML.load_file(File.open(FILE_STORE)) if File.exist?(FILE_STORE)
+    'store is empty'
   end
 end

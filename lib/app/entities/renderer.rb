@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class Renderer
-  include Store
+  include DataStorage
   attr_accessor :game_mode
   def initialize
     @game_mode = 'console'
   end
 
   def message(msg_name, hash = {})
-    write_data(I18n.t(msg_name, hash)) and return if @game_mode == WEB
+    put_data(I18n.t(msg_name, hash)) and return if @game_mode == WEB
 
     puts I18n.t(msg_name, hash)
   end
