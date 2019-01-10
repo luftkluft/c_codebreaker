@@ -5,10 +5,11 @@ class Statistics
   attr_accessor :game_mode
 
   def initialize
-    @game_mode = 'console'
+    @game_mode = CONSOLE
   end
 
   def get_stats(scores)
+    return [render_stats(sort(scores))] if scores && @game_mode == WEB
     render_stats(sort(scores)) if scores
   end
 
