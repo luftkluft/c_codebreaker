@@ -1,0 +1,6 @@
+require "c_codebreaker/version"
+
+module CCodebreaker
+  class Error < StandardError; end
+  # Your code goes here...
+end
