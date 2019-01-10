@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Statistics
-  # include DataStorage
+  include DataStorage
   attr_accessor :game_mode
 
   def initialize
@@ -9,7 +9,6 @@ class Statistics
   end
 
   def get_stats(scores)
-    # return render_stats(sort(scores)) if scores && @game_mode == WEB
     render_stats(sort(scores)) if scores
   end
 
@@ -20,8 +19,7 @@ class Statistics
   end
 
   def render_stats(list)
-    # return ['list'] if @game_mode == WEB
-
+    put_data([list]) and return if @game_mode == WEB
     list.each_with_index do |key, index|
       puts "#{index + 1}: "
       key.each { |param, value| puts "#{param}:#{value}" }

@@ -26,6 +26,7 @@ class Interface
 
   def stats
     @game.stats
+    send_data
   end
 
   def game_process(guess = '')
