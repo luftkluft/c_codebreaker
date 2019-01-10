@@ -62,10 +62,10 @@ class Game
   end
 
   def rules
+    return @renderer.rules if @game_mode == WEB
     
-    return @renderer.rules unless @game_mode == WEB
     @renderer.rules
-    game_menu 
+    game_menu unless @game_mode == WEB
   end
 
   # private

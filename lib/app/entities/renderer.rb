@@ -3,14 +3,13 @@
 class Renderer
   attr_accessor :game_mode
   def initialize
-    @game_mode = 'console'
+    @game_mode = CONSOLE
   end
 
   def message(msg_name, hash = {})
     return 'test_message' if @game_mode == WEB
 
     puts I18n.t(msg_name, hash)
-    'console mode'
   end
 
   def start_message
