@@ -19,8 +19,7 @@ class Interface
   end
 
   def rules
-    # @game.rules
-    ['test', 'message']
+    @game.rules
   end
 
   def stats
