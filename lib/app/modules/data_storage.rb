@@ -32,7 +32,11 @@ module DataStorage
   end
 
   def send_data
-    return YAML.load_file(File.open(FILE_STORE)) if File.exist?(FILE_STORE)
+    if File.exist?(FILE_STORE)
+      data = YAML.load_file(File.open(FILE_STORE))
+      File.delete(FILE_STORE)
+      data
+    end
     'store is empty'
   end
 end
