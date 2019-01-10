@@ -36,14 +36,14 @@ class Game
 
   attr_accessor :attempts, :hints, :code, :name, :level, :guess, :difficulty, :game_mode, :renderer
   def initialize
-    @game_mode = 'console'
+    @game_mode = CONSOLE
     @process = Processor.new
     @renderer = Renderer.new
     @statistics = Statistics.new
     @attempts = 0
   end
 
-  def setup_game_mode(mode = 'console')
+  def setup_game_mode(mode = CONSOLE)
     if mode == WEB
       @game_mode = WEB
       @renderer.game_mode = WEB

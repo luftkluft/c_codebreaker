@@ -3,6 +3,7 @@
 module DataStorage
   FILE_NAME = 'database/data.yml'
   FILE_STORE = 'database/store.yml'
+  EMPTY_STORE = 'store is empty'
 
   def create
     File.new(FILE_NAME, 'w')
@@ -37,6 +38,6 @@ module DataStorage
       File.delete(FILE_STORE)
       return data
     end
-    ['store is empty']
+    [EMPTY_STORE]
   end
 end
