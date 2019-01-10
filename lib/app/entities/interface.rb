@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Interface
-  attr_reader :game
+  attr_accessor :game
   def initialize
     @game = Game.new
   end
