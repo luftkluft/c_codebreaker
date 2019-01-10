@@ -1,13 +1,14 @@
+# frozen_string_literal: true
 
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "c_codebreaker/version"
+require 'c_codebreaker/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "c_codebreaker"
+  spec.name          = 'c_codebreaker'
   spec.version       = CCodebreaker::VERSION
-  spec.authors       = ["luft kluft"]
-  spec.email         = ["luftkluft@gmail.com"]
+  spec.authors       = ['luft kluft']
+  spec.email         = ['luftkluft@gmail.com']
 
   spec.summary       = 'Console app codebreaker.'
   spec.homepage      = 'https://github.com/luftkluft/c_codebreaker'
