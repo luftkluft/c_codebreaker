@@ -35,7 +35,7 @@ module DataStorage
     if File.exist?(FILE_STORE)
       data = YAML.load_file(File.open(FILE_STORE))
       File.delete(FILE_STORE)
-      data
+      return data
     end
     ['store is empty']
   end
