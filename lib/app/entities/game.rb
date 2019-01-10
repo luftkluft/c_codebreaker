@@ -57,8 +57,10 @@ class Game
   end
 
   def stats
+    return @statistics.get_stats(load) if @game_mode == WEB
+    
     @statistics.get_stats(load)
-    game_menu unless @game_mode == WEB
+    game_menu
   end
 
   def rules

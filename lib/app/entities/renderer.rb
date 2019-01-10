@@ -17,8 +17,7 @@ class Renderer
   end
 
   def rules
-    I18n.t('rules')
-    # message(:rules)
+    message(:rules)
   end
 
   def goodbye_message
