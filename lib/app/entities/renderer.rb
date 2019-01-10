@@ -8,7 +8,7 @@ class Renderer
   end
 
   def message(msg_name, hash = {})
-    put_data([I18n.t(msg_name, hash)]) and return if @game_mode == WEB
+    # put_data([I18n.t(msg_name, hash)]) and return if @game_mode == WEB
 
     puts I18n.t(msg_name, hash)
   end
@@ -18,6 +18,7 @@ class Renderer
   end
 
   def rules
+    put_data([I18n.t('goodbye_message')]) and return if @game_mode == WEB
     message(:rules)
   end
 
