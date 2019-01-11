@@ -2,3 +2,4 @@
 
 WEB = 'web'
 CONSOLE = 'console'
+NUMBER_OF_DIJITS = 4
