@@ -181,7 +181,7 @@ class Game
   end
 
   def game_process(guess = '')
-    # put_data([@guess, 'game_process']) if @game_mode == WEB # for test
+    put_data([guess, 'game_process']) if @game_mode == WEB # for test
     while @attempts.positive?
       @guess = guess if @game_mode == CONSOLE
       @guess = ask if guess.empty? && @game_mode == CONSOLE
