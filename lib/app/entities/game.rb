@@ -128,7 +128,6 @@ class Game
 
   def handle_command
     return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
-    put_data(start_process(@guess)) if @game_mode == WEB
     p start_process(@guess)
     @renderer.round_message
     decrease_attempts!
@@ -220,7 +219,7 @@ class Game
   end
 
   def start_process(command)
-    # put_data('@process.secret_code_proc(@code.join, @guess)') if @game_mode == WEB
+    put_data(['@process.secret_code_proc(@code.join, @guess)', @process.secret_code_proc(@code.join, command)]) if @game_mode == WEB
     @process.secret_code_proc(@code.join, command)
   end
 
