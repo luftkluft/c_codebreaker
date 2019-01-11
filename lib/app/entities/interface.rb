@@ -17,6 +17,7 @@ class Interface
 
   def start(name = '', level = '')
     @game.start(name, level)
+    send_data
   end
 
   def rules

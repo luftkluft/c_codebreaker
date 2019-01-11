@@ -70,6 +70,7 @@ class Game
 
   def generate_game(difficulty)
     generate(difficulty)
+    put_data([hints: difficulty[:hints], attempts: difficulty[:attempts]]) if @game_mode == WEB
     @renderer.message(:difficulty,
                       hints: difficulty[:hints],
                       attempts: difficulty[:attempts])
