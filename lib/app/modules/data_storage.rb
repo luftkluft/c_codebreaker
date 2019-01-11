@@ -38,6 +38,6 @@ module DataStorage
       File.delete(FILE_STORE)
       return data
     end
-    [EMPTY_STORE, Time.now]
+    [EMPTY_STORE, Time.now.strftime('%d-%m-%Y %R')]
   end
 end
