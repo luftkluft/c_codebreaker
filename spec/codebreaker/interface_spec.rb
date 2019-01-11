@@ -4,6 +4,7 @@ RSpec.describe Interface do
   let(:game) { Game.new }
   let(:name) { 'Name' }
   let(:level) { 'easy' }
+  let(:path) { 'database/store.yml' }
   it 'default initialization game_mode with `console`' do
     expect(game.instance_variable_get('@game_mode')).to eq(CONSOLE)
     expect(game.renderer.instance_variable_get('@game_mode')).to eq(CONSOLE)
@@ -21,6 +22,7 @@ RSpec.describe Interface do
       game.start(name, level)
       expect(game.instance_variable_get('@name')).to eq(name)
       expect(game.instance_variable_get('@level')).to eq(level)
+      File.delete(path) if File.exist?(path)
     end
   end
 end
