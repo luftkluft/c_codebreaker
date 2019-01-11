@@ -3,7 +3,7 @@
 require 'simplecov'
 
 SimpleCov.start do
-  minimum_coverage 95
+  # minimum_coverage 95
 end
 
 require_relative '../autoload.rb'
