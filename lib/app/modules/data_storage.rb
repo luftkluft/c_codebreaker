@@ -38,6 +38,6 @@ module DataStorage
       File.delete(FILE_STORE)
       return data
     end
-    [EMPTY_STORE]
+    [EMPTY_STORE, Time.now]
   end
 end
