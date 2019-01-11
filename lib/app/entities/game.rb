@@ -163,7 +163,7 @@ class Game
     @name = register_user if name.empty?
     @level = level
     @level = level_choice if level.empty?
-    put_data([difficulty[:hints], difficulty[:attempts], 'test_put']) if @game_mode == WEB
+    put_data([@difficulty[:hints], @difficulty[:attempts], 'test_put']) if @game_mode == WEB
     game_process
   end
 
