@@ -119,7 +119,6 @@ class Game
   end
 
   def choice_code_process
-    put_data(@guess) if @game_mode == WEB
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
@@ -176,8 +175,9 @@ class Game
   end
 
   def game_process(guess = '')
-    while attempts.positive?
+    while @attempts.positive?
       @guess = guess
+      put_data(@guess) if @game_mode == WEB
       @guess = ask if guess.empty?
       return handle_win if win?(@guess)
 
