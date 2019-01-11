@@ -32,6 +32,7 @@ class Interface
 
   def game_process(guess = '')
     @game.game_process(guess)
+    send_data
   end
 
   def update_game(update_data)
