@@ -7,7 +7,7 @@ class Renderer
     @game_mode = CONSOLE
   end
 
-  def message(msg_name, hash = {})
+  def message(msg_name, hash = {}) # TODO
     # put_data([I18n.t(msg_name, hash)]) and return if @game_mode == WEB
 
     puts I18n.t(msg_name, hash)
@@ -17,7 +17,7 @@ class Renderer
     message(:start_message)
   end
 
-  def rules
+  def rules # TODO
     m = I18n.t('goodbye_message')
     put_data([m]) and return if @game_mode == WEB
     message(:rules)
