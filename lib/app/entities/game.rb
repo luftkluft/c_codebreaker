@@ -165,7 +165,8 @@ class Game
     @level = level_choice if level.empty?
     if @game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
-      put_data([Game::DIFFICULTIES[level.to_sym], {code: @code.join}, 'test_put'])
+      @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
+      put_data([Game::DIFFICULTIES[level.to_sym], {code: @code.join}, {hints: @hints}])
     end
     
     game_process
@@ -208,7 +209,7 @@ class Game
   def generate(difficulty)
     @difficulty = difficulty
     @code = Array.new(DIGITS_COUNT) { rand(RANGE) } if @game_mode == CONSOLE
-    @hints = @code.sample(difficulty[:hints])
+    @hints = @code.sample(difficulty[:hints]) if @game_mode == CONSOLE
     @attempts = difficulty[:attempts]
   end
 
