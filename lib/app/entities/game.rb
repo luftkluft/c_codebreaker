@@ -216,7 +216,7 @@ class Game
   end
 
   def start_process(command)
-    put_data(@process.secret_code_proc(@code.join, @guess)) if @game_mode == WEB
+    put_data('@process.secret_code_proc(@code.join, @guess)') if @game_mode == WEB
     @process.secret_code_proc(@code.join, command)
   end
 
