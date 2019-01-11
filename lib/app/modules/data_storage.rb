@@ -37,6 +37,6 @@ module DataStorage
       File.delete(FILE_STORE)
       return data
     end
-    {Time.now.strftime('%d-%m-%Y %R')}
+    [Time.now.strftime('%d-%m-%Y %R')]
   end
 end
