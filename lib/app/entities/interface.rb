@@ -31,6 +31,7 @@ class Interface
   end
 
   def game_process(guess = '')
+    put_data([guess, 'gp'])#  if @game_mode == WEB # for test
     @game.game_process(guess)
     send_data
   end
