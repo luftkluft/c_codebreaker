@@ -82,7 +82,7 @@ class Game
 
   def ask(phrase_key = nil, options = {})
     @renderer.message(phrase_key, options) if phrase_key
-    gets.chomp unless @game_mode == WEB
+    gets.chomp
   end
 
   def level_choice
@@ -128,6 +128,7 @@ class Game
 
   def handle_command
     return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
+    put_data(start_process(@guess)) if @game_mode == WEB
     p start_process(@guess)
     @renderer.round_message
     decrease_attempts!
@@ -165,6 +166,7 @@ class Game
     if @game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
+      @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
       put_data({name: @name, level: @level,
                 attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
                 hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
@@ -175,12 +177,9 @@ class Game
   end
 
   def game_process(guess = '')
-    put_data(guess) if @game_mode == WEB
     while @attempts.positive?
-
-      @guess = guess
-
-      @guess = ask if guess.empty?
+      @guess = guess if @game_mode == CONSOLE
+      @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
 
       choice_code_process
@@ -213,9 +212,11 @@ class Game
 
   def generate(difficulty)
     @difficulty = difficulty
-    @code = Array.new(DIGITS_COUNT) { rand(RANGE) } if @game_mode == CONSOLE
-    @hints = @code.sample(difficulty[:hints]) if @game_mode == CONSOLE
-    @attempts = difficulty[:attempts]
+    if @game_mode == CONSOLE
+      @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
+      @hints = @code.sample(difficulty[:hints])
+      @attempts = difficulty[:attempts]
+    end
   end
 
   def start_process(command)

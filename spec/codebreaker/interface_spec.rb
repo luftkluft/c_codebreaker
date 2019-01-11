@@ -17,6 +17,7 @@ RSpec.describe Interface do
     end
 
     it '.game.start with params' do
+      game.instance_variable_set('@guess', '1234') # TODO
       game.start(name, level)
       expect(game.instance_variable_get('@name')).to eq(name)
       expect(game.instance_variable_get('@level')).to eq(level)

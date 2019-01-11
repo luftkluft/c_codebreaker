@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module CCodebreaker
-  VERSION = '1.4.10'
+  VERSION = '1.4.12'
 end
