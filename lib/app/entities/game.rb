@@ -163,7 +163,7 @@ class Game
     @name = register_user if name.empty?
     @level = level
     @level = level_choice if level.empty?
-    put_data([Game::DIFFICULTIES[level.to_sym], 'test_put']) if @game_mode == WEB
+    put_data([Game::DIFFICULTIES[level.to_sym], @code, 'test_put']) if @game_mode == WEB
     game_process
   end
 
