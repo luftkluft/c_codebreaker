@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    c_codebreaker (1.2.22)
+    c_codebreaker (1.2.23)
 
 GEM
   remote: https://rubygems.org/

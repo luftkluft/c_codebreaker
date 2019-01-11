@@ -166,7 +166,10 @@ class Game
     if @game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
-      put_data([{name: @name, level: @level}, {attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts]}, {code: @code}, {hints: @hints}])
+      put_data({name: @name, level: @level,
+                attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
+                hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
+                code_array: @code, hints_array: @hints})
     end
     
     game_process
