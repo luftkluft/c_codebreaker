@@ -163,7 +163,11 @@ class Game
     @name = register_user if name.empty?
     @level = level
     @level = level_choice if level.empty?
-    put_data([Game::DIFFICULTIES[level.to_sym], @code, 'test_put']) if @game_mode == WEB
+    if @game_mode == WEB
+      @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
+      put_data([Game::DIFFICULTIES[level.to_sym], @code, 'test_put'])
+    end
+    
     game_process
   end
 
@@ -203,7 +207,7 @@ class Game
 
   def generate(difficulty)
     @difficulty = difficulty
-    @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
+    @code = Array.new(DIGITS_COUNT) { rand(RANGE) } if @game_mode == CONSOLE
     @hints = @code.sample(difficulty[:hints])
     @attempts = difficulty[:attempts]
   end
