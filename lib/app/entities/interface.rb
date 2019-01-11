@@ -33,4 +33,11 @@ class Interface
   def game_process(guess = '')
     @game.game_process(guess)
   end
+
+  def update_game(update_data)
+    @game.instance_variable_set('@name', update_data[:name])
+    @game.instance_variable_set('@level', update_data[:level])
+    @game.instance_variable_set('@code', update_data[:code_array])
+    @game.instance_variable_set('@hints', update_data[:hints_array])
+  end
 end
