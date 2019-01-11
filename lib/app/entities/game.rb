@@ -165,7 +165,7 @@ class Game
     @level = level_choice if level.empty?
     if @game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
-      put_data([Game::DIFFICULTIES[level.to_sym], code: @code.join, 'test_put'])
+      put_data([Game::DIFFICULTIES[level.to_sym], {code: @code.join}, 'test_put'])
     end
     
     game_process
