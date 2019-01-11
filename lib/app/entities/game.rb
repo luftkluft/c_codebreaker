@@ -181,8 +181,8 @@ class Game
     while @attempts.positive?
       @guess = guess if !guess.empty? && @game_mode == WEB
       @guess = ask if guess.empty? && @game_mode == CONSOLE
-      return handle_win if win?(@guess)
-      # put_data([@guess, ' while @attempts.positive?']) if @game_mode == WEB # for test
+#      return handle_win if win?(@guess)
+      put_data([@guess, ' while @attempts.positive?']) if @game_mode == WEB # for test
       choice_code_process
     end
     handle_lose
