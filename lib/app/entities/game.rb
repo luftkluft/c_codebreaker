@@ -122,12 +122,14 @@ class Game
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
-    else handle_command
+    else
+      put_data('handle_command') if @game_mode == WEB
+       handle_command
     end
   end
 
   def handle_command
-    put_data(@guess) if @game_mode == WEB
+    put_data(@guess) if @game_mode == WEB # for test
     return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
 
     p start_process(@guess)
