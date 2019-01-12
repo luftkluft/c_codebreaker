@@ -140,11 +140,15 @@ class Game
   end
 
   def hint_process
-    put_data('no hints') if @game_mode == WEB && hints_spent? # TODO
-    put_data(take_hint!) if @game_mode == WEB
-    return @renderer.no_hints_message? if hints_spent? && @game_mode == CONSOLE
+    if @game_mode == WEB
+      @guess = ''
+      put_data('no hints') and return if hints_spent? # TODO
+      put_data(take_hint!)
+    else
+      return @renderer.no_hints_message? if hints_spent?
 
-    @renderer.print_hint_number(take_hint!) if @game_mode == CONSOLE
+      @renderer.print_hint_number(take_hint!)
+    end
     binding.pry # DEV
   end
 
