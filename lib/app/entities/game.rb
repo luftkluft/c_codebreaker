@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'pry'
+# require 'pry'
 
 class Game
   include Validator
@@ -121,14 +121,13 @@ class Game
   end
 
   def choice_code_process
-    return if @guess.empty?
+    return if @guess.empty? # TODO
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
     else
       handle_command
     end
-    binding.pry # DEV
   end
 
   def handle_command
@@ -150,7 +149,6 @@ class Game
 
       @renderer.print_hint_number(take_hint!)
     end
-    binding.pry # DEV
   end
 
   def handle_win
@@ -192,6 +190,7 @@ class Game
   def game_process(guess = '', update_data = {})
     if @game_mode == WEB
       return if guess.empty?
+
       @guess = guess # if !guess.empty?
       update_game(update_data)
     end
