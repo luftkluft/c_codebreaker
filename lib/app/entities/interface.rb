@@ -30,14 +30,12 @@ class Interface
     send_data
   end
 
-  def game_process(guess = '')
-    @game.game_process(guess)
+  def game_process(guess = '', update_data = {})
+    @game.game_process(guess, update_data)
     send_data
   end
 
   def update_game(update_data)
-    put_data(update_data)
-#    @game.update_game(update_data)
-    send_data
+    @game.update_game(update_data)
   end
 end
