@@ -231,10 +231,10 @@ class Game
   end
 
   def update_game(update_data)
-    instance_variable_set('@name', update_data[:name])
-    instance_variable_set('@level', update_data[:level])
-    instance_variable_set('@code', update_data[:code_array])
-    instance_variable_set('@hints', update_data[:hints_array])
-    instance_variable_set('@attempts', update_data[:attempts])
+    @name = update_data[:name]
+    @level = update_data[:level]
+    @code = update_data[:code_array]
+    @hints = update_data[:hints_array]
+    @attempts = update_data[:attempts]
   end
 end
