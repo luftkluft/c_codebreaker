@@ -274,5 +274,6 @@ class Game
     @code = update_data[:code_array]
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
+    @difficulty = update_data[:level]
   end
 end
