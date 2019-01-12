@@ -241,6 +241,15 @@ class Game
       hints_used: @difficulty[:hints] - @hints.length,
       date: Time.now.strftime('%d-%m-%Y %R')
     }
+    # {
+    #   name: name,
+    #   difficulty: @level,
+    #   all_attempts: (Game::DIFFICULTIES[@level.to_sym])[:attempts],
+    #   all_hints: (Game::DIFFICULTIES[level.to_sym][:hints]),
+    #   attempts_used:(Game::DIFFICULTIES[@level.to_sym])[:attempts] - @attempts,
+    #   hints_used: (Game::DIFFICULTIES[level.to_sym][:hints]) - @hints.length,
+    #   date: Time.now.strftime('%d-%m-%Y %R')
+    # }
   end
 
   def hints_spent?
@@ -274,6 +283,6 @@ class Game
     @code = update_data[:code_array]
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
-    @difficulty = update_data[:level]
+    @difficulty = Game::DIFFICULTIES[@level.to_sym]
   end
 end
