@@ -180,7 +180,7 @@ class Game
 
   def game_process(guess = '')
     @guess = guess if !guess.empty? && @game_mode == WEB
-    put_data([@guess,'gp', @attempts]) if @game_mode == WEB
+    put_data([@guess,'gp', @attempts, @code, @hints, @name, @level]) if @game_mode == WEB
     while @attempts.positive?
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
