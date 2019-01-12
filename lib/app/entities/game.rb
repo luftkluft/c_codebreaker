@@ -119,7 +119,6 @@ class Game
   end
 
   def choice_code_process
-    put_data('choice_code_process') if @game_mode == WEB
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
@@ -137,9 +136,11 @@ class Game
   end
 
   def hint_process
-    return @renderer.no_hints_message? if hints_spent?
+    put_data('no hints') and return if @game_mode == WEB && hints_spent? # TODO
+    put_data(take_hint!) and return if @game_mode == WEB
+    return @renderer.no_hints_message? # if hints_spent? && @game_mode == CONSOLE
 
-    @renderer.print_hint_number(take_hint!)
+    @renderer.print_hint_number(take_hint!) # if @game_mode == CONSOLE
   end
 
   def handle_win
@@ -183,8 +184,7 @@ class Game
       @guess = guess if !guess.empty?
       update_game(update_data)
     end
-    
-    put_data([@guess,'gp', @attempts, @code, @hints, @name, @level]) if @game_mode == WEB
+
     while @attempts.positive?
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
