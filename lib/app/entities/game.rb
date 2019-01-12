@@ -120,11 +120,11 @@ class Game
 
   def choice_code_process
     put_data([@guess, 'ch_c_p']) if @game_mode == WEB
-    case @guess
-    when HINT_COMMAND then hint_process
-    when COMMANDS[:exit] then game_menu
-    else handle_command
-    end
+    # case @guess
+    # when HINT_COMMAND then hint_process
+    # when COMMANDS[:exit] then game_menu
+    # else handle_command
+    # end
   end
 
   def handle_command
