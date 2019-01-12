@@ -122,7 +122,7 @@ class Game
 
   def choice_code_process
     case @guess
-    when 'hint' then hint_process # TODO DEV
+    when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
     else
       handle_command
@@ -137,12 +137,11 @@ class Game
     p start_process(@guess) if @game_mode == CONSOLE
     @renderer.round_message if @game_mode == CONSOLE
     decrease_attempts!
-    binding.pry # DEV
   end
 
   def hint_process
-    put_data('no hints') and return if @game_mode == WEB && hints_spent? # TODO
-    put_data(take_hint!) and return if @game_mode == WEB
+    put_data('no hints') if @game_mode == WEB && hints_spent? # TODO
+    put_data(take_hint!) if @game_mode == WEB
     return @renderer.no_hints_message? if hints_spent? && @game_mode == CONSOLE
 
     @renderer.print_hint_number(take_hint!) if @game_mode == CONSOLE
