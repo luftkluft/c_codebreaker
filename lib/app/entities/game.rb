@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'pry'
+
 class Game
   include Validator
   include DataStorage
@@ -119,12 +121,13 @@ class Game
   end
 
   def choice_code_process
-    put_data([@guess, 'ch_c_p']) if @game_mode == WEB
     case @guess
-    when HINT_COMMAND then hint_process
+    when 'hint' then hint_process # TODO DEV
     when COMMANDS[:exit] then game_menu
-    else handle_command
+    else
+      handle_command
     end
+    binding.pry # DEV
   end
 
   def handle_command
@@ -134,6 +137,7 @@ class Game
     p start_process(@guess) if @game_mode == CONSOLE
     @renderer.round_message if @game_mode == CONSOLE
     decrease_attempts!
+    binding.pry # DEV
   end
 
   def hint_process
@@ -142,6 +146,7 @@ class Game
     return @renderer.no_hints_message? if hints_spent? && @game_mode == CONSOLE
 
     @renderer.print_hint_number(take_hint!) if @game_mode == CONSOLE
+    binding.pry # DEV
   end
 
   def handle_win
@@ -188,10 +193,11 @@ class Game
 
     while @attempts.positive?
       @guess = ask if guess.empty? && @game_mode == CONSOLE
-#      return handle_win if win?(@guess)
+      return handle_win if win?(@guess)
       choice_code_process
     end
-#    handle_lose
+
+    handle_lose
   end
 
   def decrease_attempts!
