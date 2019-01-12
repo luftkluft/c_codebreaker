@@ -127,9 +127,9 @@ class Game
   end
 
   def handle_command
+    put_data(start_process(@guess)) if @game_mode == WEB
     return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
 
-    put_data(start_process(@guess)) if @game_mode == WEB
     p start_process(@guess) if @game_mode == CONSOLE
     @renderer.round_message if @game_mode == CONSOLE
     decrease_attempts!
