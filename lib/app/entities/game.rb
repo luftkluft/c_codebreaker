@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# require 'pry'
+require 'pry'
 
 class Game
   include Validator
@@ -199,6 +199,8 @@ class Game
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
       choice_code_process
+      return if @guess.empty? # TODO
+      binding.pry
     end
 
     handle_lose
