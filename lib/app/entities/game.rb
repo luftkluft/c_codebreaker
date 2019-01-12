@@ -116,10 +116,14 @@ class Game
   end
 
   def handle_lose
-    put_data('luse') and return if @game_mode == WEB # TODO
-    @guess = '' if @game_mode == WEB
-    @renderer.lost_game_message(@code)
-    game_menu
+    if @game_mode == WEB
+      @guess = ''
+      put_data('luse')
+      return
+    else
+      @renderer.lost_game_message(@code)
+      game_menu
+    end
   end
 
   def choice_code_process
