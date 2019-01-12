@@ -119,7 +119,6 @@ class Game
   end
 
   def choice_code_process
-    put_data([@guess, 'choice_code_process']) if @game_mode == WEB # for test
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
@@ -129,7 +128,7 @@ class Game
 
   def handle_command
     return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
-    put_data([@guess, start_process(@guess)]) if @game_mode == WEB # for test
+    put_data(start_process(@guess)) if @game_mode == WEB # for test
     p start_process(@guess)
     @renderer.round_message
     decrease_attempts!
@@ -178,12 +177,11 @@ class Game
   end
 
   def game_process(guess = '')
+    @guess = guess if !guess.empty? && @game_mode == WEB
     while @attempts.positive?
-      @guess = guess if !guess.empty? && @game_mode == WEB
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
-      put_data([@guess, ' while @attempts.positive?']) if @game_mode == WEB # for test
-#      choice_code_process
+      choice_code_process
     end
     handle_lose
   end
