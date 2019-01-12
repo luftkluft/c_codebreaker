@@ -6,9 +6,23 @@ RSpec.describe Interface do
   let(:level) { 'easy' }
   let(:path) { 'database/store.yml' }
   let(:guess) { '1234' }
+  let(:code_array) { [1, 2, 3, 4] }
+  let(:hints_array) { [1, 2] }
+  let(:attempts) { 5 }
+  let(:update_data) { {name: name, level: level,
+                       code_array: code_array,
+                       hints_array: hints_array,
+                       attempts: attempts } }
   it 'default initialization game_mode with `console`' do
     expect(game.instance_variable_get('@game_mode')).to eq(CONSOLE)
     expect(game.renderer.instance_variable_get('@game_mode')).to eq(CONSOLE)
+  end
+
+  it '.update_game' do
+    game.update_game(update_data)
+    expect(game.instance_variable_get('@hints')).to be_a Array
+    expect(game.instance_variable_get('@hints').size).to be 2
+    expect(game.instance_variable_get('@attempts')).to be 5
   end
 
   context 'with web mode' do

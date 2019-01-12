@@ -36,10 +36,6 @@ class Interface
   end
 
   def update_game(update_data)
-    @game.instance_variable_set('@name', update_data[:name])
-    @game.instance_variable_set('@level', update_data[:level])
-    @game.instance_variable_set('@code', update_data[:code_array])
-    @game.instance_variable_set('@hints', update_data[:hints_array])
-    @game.instance_variable_set('@attempts', update_data[:attempts])
+    @game.update_game(update_data)
   end
 end
