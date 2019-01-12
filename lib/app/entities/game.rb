@@ -179,9 +179,9 @@ class Game
   end
 
   def game_process(guess = '')
-    put_data([guess,'gp']) if @game_mode == WEB
     @guess = guess if !guess.empty? && @game_mode == WEB
     while @attempts.positive?
+      put_data([@guess,'gp']) if @game_mode == WEB
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
       choice_code_process
