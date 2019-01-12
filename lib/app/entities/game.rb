@@ -124,9 +124,9 @@ class Game
   end
 
   def handle_lose
-    if @game_mode == WEB
+    if @game_mode == WEB # TODO
       @guess = ''
-      put_data('luse')
+      put_data(to_h(@name).update({code: @code.join}))
       return
     else
       @renderer.lost_game_message(@code)
@@ -241,15 +241,6 @@ class Game
       hints_used: @difficulty[:hints] - @hints.length,
       date: Time.now.strftime('%d-%m-%Y %R')
     }
-    # {
-    #   name: name,
-    #   difficulty: @level,
-    #   all_attempts: (Game::DIFFICULTIES[@level.to_sym])[:attempts],
-    #   all_hints: (Game::DIFFICULTIES[level.to_sym][:hints]),
-    #   attempts_used:(Game::DIFFICULTIES[@level.to_sym])[:attempts] - @attempts,
-    #   hints_used: (Game::DIFFICULTIES[level.to_sym][:hints]) - @hints.length,
-    #   date: Time.now.strftime('%d-%m-%Y %R')
-    # }
   end
 
   def hints_spent?
