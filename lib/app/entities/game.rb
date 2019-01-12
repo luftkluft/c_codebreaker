@@ -138,9 +138,9 @@ class Game
   def hint_process
     put_data('no hints') and return if @game_mode == WEB && hints_spent? # TODO
     put_data(take_hint!) and return if @game_mode == WEB
-    return @renderer.no_hints_message? # if hints_spent? && @game_mode == CONSOLE
+    return @renderer.no_hints_message? if hints_spent? && @game_mode == CONSOLE
 
-    @renderer.print_hint_number(take_hint!) # if @game_mode == CONSOLE
+    @renderer.print_hint_number(take_hint!) if @game_mode == CONSOLE
   end
 
   def handle_win
