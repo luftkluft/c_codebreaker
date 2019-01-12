@@ -40,5 +40,6 @@ class Interface
     @game.instance_variable_set('@level', update_data[:level])
     @game.instance_variable_set('@code', update_data[:code_array])
     @game.instance_variable_set('@hints', update_data[:hints_array])
+    @game.instance_variable_set('@attempts', update_data[:attempts])
   end
 end
