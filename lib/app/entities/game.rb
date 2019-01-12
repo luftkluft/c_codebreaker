@@ -90,8 +90,8 @@ class Game
   def level_choice
     loop do
       @level = ask(:hard_level, levels: Game::DIFFICULTIES.keys.join(' | '))
-
       return generate_game(Game::DIFFICULTIES[level.to_sym]) if Game::DIFFICULTIES[level.to_sym]
+
       return game_menu if @level == COMMANDS[:exit]
 
       @renderer.command_error
@@ -121,7 +121,7 @@ class Game
   end
 
   def choice_code_process
-    return if @guess.empty? # TODO
+    # return if @guess.empty? # TODO
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
@@ -191,7 +191,7 @@ class Game
     if @game_mode == WEB
       return if guess.empty?
 
-      @guess = guess # if !guess.empty?
+      @guess = guess
       update_game(update_data)
     end
 
@@ -199,8 +199,7 @@ class Game
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
       choice_code_process
-      return if @guess.empty? # TODO
-      binding.pry
+      return if @guess.empty?
     end
 
     handle_lose
@@ -239,7 +238,6 @@ class Game
   end
 
   def start_process(command)
-    # put_data(['@process.secret_code_proc(@code.join, @guess)', @process.secret_code_proc(@code.join, command)]) if @game_mode == WEB
     @process.secret_code_proc(@code.join, command)
   end
 
