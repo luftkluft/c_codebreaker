@@ -144,11 +144,14 @@ class Game
   end
 
   def handle_command
-    return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
-
-    put_data(start_process(@guess)) if @game_mode == WEB
-    p start_process(@guess) if @game_mode == CONSOLE
-    @renderer.round_message if @game_mode == CONSOLE
+    if @game_mode == WEB
+      put_data(start_process(@guess))
+      @guess = ''
+    else
+      return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
+      p start_process(@guess)
+      @renderer.round_message
+    end
     decrease_attempts!
   end
 
