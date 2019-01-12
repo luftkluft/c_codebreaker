@@ -99,7 +99,15 @@ class Game
   end
 
   def save_result
-    save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
+    if @game_mode == WEB
+      @guess = ''
+      # put_data(to_h(@name))
+      save_game_result(to_h(@name))
+      return
+    else
+      save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
+    end
+
   end
 
   def register_user
@@ -157,9 +165,15 @@ class Game
   end
 
   def handle_win
-    @renderer.win_game_message
-    save_result
-    game_menu unless @game_mode == WEB
+    if @game_mode == WEB # TODO
+      @guess = ''
+      save_result
+      return
+    else
+      @renderer.win_game_message
+      save_result
+      game_menu
+    end
   end
 
   def choice_menu_process(command_name)
@@ -221,7 +235,8 @@ class Game
       all_attempts: @difficulty[:attempts],
       all_hints: @difficulty[:hints],
       attempts_used: @difficulty[:attempts] - @attempts,
-      hints_used: @difficulty[:hints] - @hints.length
+      hints_used: @difficulty[:hints] - @hints.length,
+      date: Time.now.strftime('%d-%m-%Y %R')
     }
   end
 
