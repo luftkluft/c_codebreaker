@@ -121,7 +121,7 @@ class Game
   end
 
   def choice_code_process
-    # return if @guess.empty? # TODO
+    return if @guess.empty? # TODO
     case @guess
     when HINT_COMMAND then hint_process
     when COMMANDS[:exit] then game_menu
