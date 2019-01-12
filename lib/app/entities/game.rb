@@ -101,7 +101,7 @@ class Game
   def save_result
     if @game_mode == WEB
       @guess = ''
-      # put_data(to_h(@name))
+      put_data(to_h(@name))
       save_game_result(to_h(@name))
       return
     else
