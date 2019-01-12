@@ -190,7 +190,8 @@ class Game
 
   def game_process(guess = '', update_data = {})
     if @game_mode == WEB
-      @guess = guess if !guess.empty?
+      return if guess.empty?
+      @guess = guess # if !guess.empty?
       update_game(update_data)
     end
 
