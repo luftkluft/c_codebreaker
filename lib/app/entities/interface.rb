@@ -36,6 +36,8 @@ class Interface
   end
 
   def update_game(update_data)
+    put_data(update_data)
     @game.update_game(update_data)
+    send_data
   end
 end
