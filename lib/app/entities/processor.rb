@@ -4,7 +4,7 @@ class Processor
   MATCHED_DIGIT_CHAR = '+'
   UNMATCHED_DIGIT_CHAR = '-'
 
-  attr_reader :guess, :code, :result
+  attr_reader :guess, :code
 
   def secret_code_proc(code, guess)
     @code = code.split('')
