@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 class Game
   include Validator
   include DataStorage
@@ -64,8 +62,13 @@ class Game
   end
 
   def rules
-    @renderer.rules
-    game_menu unless @game_mode == WEB
+    if @game_mode == WEB
+      put_data(I18n.t(:rules))
+      return
+    else
+      @renderer.rules
+      game_menu
+    end
   end
 
   # private
@@ -124,7 +127,7 @@ class Game
   end
 
   def handle_lose
-    if @game_mode == WEB # TODO
+    if @game_mode == WEB
       @guess = ''
       put_data(to_h(@name).update({code: @code.join}))
       return
@@ -158,7 +161,7 @@ class Game
   def hint_process
     if @game_mode == WEB
       @guess = ''
-      put_data('no hints') and return if hints_spent? # TODO
+      put_data('no hints') and return if hints_spent?
       put_data(take_hint!)
     else
       return @renderer.no_hints_message? if hints_spent?
@@ -168,7 +171,7 @@ class Game
   end
 
   def handle_win
-    if @game_mode == WEB # TODO
+    if @game_mode == WEB
       @guess = ''
       save_result
       return

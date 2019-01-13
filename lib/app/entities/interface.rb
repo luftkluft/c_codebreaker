@@ -7,8 +7,8 @@ class Interface
     @game = Game.new
   end
 
-  def setup_web_mode(mode = WEB)
-    @game.setup_game_mode(mode)
+  def setup_web_mode
+    @game.setup_game_mode(WEB)
   end
 
   def game_menu
@@ -33,9 +33,5 @@ class Interface
   def game_process(guess = '', update_data = {})
     @game.game_process(guess, update_data)
     send_data
-  end
-
-  def update_game(update_data)
-    @game.update_game(update_data)
   end
 end

@@ -26,6 +26,22 @@ RSpec.describe Game do
   include DataStorage
   let(:statistics) { Statistics.new }
 
+  let(:name) { 'Name' }
+  let(:level) { 'easy' }
+  let(:code_array) { [1, 2, 3, 4] }
+  let(:attempts) { 5 }
+  let(:update_data) { {name: name, level: level,
+    code_array: code_array,
+    hints_array: hints_array,
+    attempts: attempts } }
+
+  it '.update_game' do
+    subject.update_game(update_data)
+    expect(subject.instance_variable_get('@hints')).to be_a Array
+    expect(subject.instance_variable_get('@hints').size).to be 2
+    expect(subject.instance_variable_get('@attempts')).to be 5
+  end
+
   context 'when testing #take_a_hint! method' do
     it 'returnes last el of hints array' do
       subject.instance_variable_set(:@hints, hints_array)
