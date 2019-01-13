@@ -63,7 +63,8 @@ class Game
 
   def rules
     if @game_mode == WEB
-      put_data(I18n.t(:rules))
+      rules = Rules.new.load_ruless
+      put_data(rules)
       return
     else
       @renderer.rules
