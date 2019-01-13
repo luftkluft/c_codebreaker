@@ -57,8 +57,13 @@ class Game
   end
 
   def stats
-    @statistics.get_stats(load)
-    game_menu unless @game_mode == WEB
+    if @game_mode == WEB
+      put_data(@statistics.sort(load))
+      return
+    else
+      @statistics.get_stats(load)
+      game_menu
+    end
   end
 
   def rules
