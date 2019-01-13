@@ -59,8 +59,7 @@ class Game
   def stats
     if @game_mode == WEB
       put_data(@statistics.sort(load.flatten))
-      # put_data(@statistics.get_stats(load))
-      return
+      nil
     else
       @statistics.get_stats(load)
       game_menu
@@ -70,7 +69,7 @@ class Game
   def rules
     if @game_mode == WEB
       put_data(I18n.t(:rules))
-      return
+      nil
     else
       @renderer.rules
       game_menu
@@ -112,11 +111,10 @@ class Game
       @guess = ''
       put_data(to_h(@name))
       save_game_result(to_h(@name))
-      return
+      nil
     else
       save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
     end
-
   end
 
   def register_user
@@ -135,8 +133,8 @@ class Game
   def handle_lose
     if @game_mode == WEB
       @guess = ''
-      put_data(to_h(@name).update({code: @code.join}))
-      return
+      put_data(to_h(@name).update(code: @code.join))
+      nil
     else
       @renderer.lost_game_message(@code)
       game_menu
@@ -158,6 +156,7 @@ class Game
       @guess = ''
     else
       return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
+
       p start_process(@guess)
       @renderer.round_message
     end
@@ -167,7 +166,7 @@ class Game
   def hint_process
     if @game_mode == WEB
       @guess = ''
-      put_data('no hints') and return if hints_spent?
+      put_data('no hints') && return if hints_spent?
       put_data(take_hint!)
     else
       return @renderer.no_hints_message? if hints_spent?
@@ -180,7 +179,7 @@ class Game
     if @game_mode == WEB
       @guess = ''
       save_result
-      return
+      nil
     else
       @renderer.win_game_message
       save_result
@@ -209,12 +208,12 @@ class Game
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
       @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
-      put_data({name: @name, level: @level,
-                attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
-                hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
-                code_array: @code, hints_array: @hints})
+      put_data(name: @name, level: @level,
+               attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
+               hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
+               code_array: @code, hints_array: @hints)
     end
-    
+
     game_process if @game_mode == CONSOLE
   end
 
@@ -229,6 +228,7 @@ class Game
     while @attempts.positive?
       @guess = ask if guess.empty? && @game_mode == CONSOLE
       return handle_win if win?(@guess)
+
       choice_code_process
       return if @guess.empty?
     end

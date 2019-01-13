@@ -10,8 +10,8 @@ gemspec
 gem 'i18n'
 
 group :development do
-  gem 'pry'
   gem 'fasterer'
+  gem 'pry'
   gem 'rubocop'
   gem 'rubocop-rspec'
 end

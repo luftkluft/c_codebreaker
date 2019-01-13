@@ -19,7 +19,7 @@ class Statistics
   end
 
   def render_stats(list)
-    put_data([list]) and return if @game_mode == WEB
+    put_data([list]) && return if @game_mode == WEB
     list.each_with_index do |key, index|
       puts "#{index + 1}: "
       key.each { |param, value| puts "#{param}:#{value}" }

@@ -22,7 +22,7 @@ RSpec.describe Game do
   let(:hints_array) { [1, 1] }
   let(:valid_name) { 'a' * rand(3..20) }
   let(:code) { [1, 1, 1, 1] }
-
+  let(:path) { 'database/store.yml' }
   include DataStorage
   let(:statistics) { Statistics.new }
 
@@ -30,10 +30,12 @@ RSpec.describe Game do
   let(:level) { 'easy' }
   let(:code_array) { [1, 2, 3, 4] }
   let(:attempts) { 5 }
-  let(:update_data) { {name: name, level: level,
-    code_array: code_array,
-    hints_array: hints_array,
-    attempts: attempts } }
+  let(:update_data) do
+    { name: name, level: level,
+      code_array: code_array,
+      hints_array: hints_array,
+      attempts: attempts }
+  end
 
   it '.update_game' do
     subject.update_game(update_data)
