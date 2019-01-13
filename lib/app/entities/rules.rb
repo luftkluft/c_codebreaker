@@ -1,5 +1,5 @@
 class Rules
-  RULES_PATH_ROUTE = '../rules/'.freeze
+  RULES_PATH_ROUTE = 'lib/app/rules/'.freeze
   RULES_PATH_NAME = 'rules'.freeze
   RULES_PATH_FORMAT = '.txt'.freeze
   RULES_PATH = RULES_PATH_ROUTE + RULES_PATH_NAME + RULES_PATH_FORMAT
