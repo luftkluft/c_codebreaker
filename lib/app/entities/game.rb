@@ -58,7 +58,8 @@ class Game
 
   def stats
     if @game_mode == WEB
-      put_data(@statistics.sort(load))
+      # put_data(@statistics.sort(load))
+      put_data(load)
       return
     else
       @statistics.get_stats(load)
