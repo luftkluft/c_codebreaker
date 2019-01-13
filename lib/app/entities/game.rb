@@ -58,11 +58,19 @@ class Game
 
   def stats
     if @game_mode == WEB
-      put_data(@statistics.sort(load.flatten))
+      load_web_stat
       nil
     else
       @statistics.get_stats(load)
       game_menu
+    end
+  end
+
+  def load_web_stat
+    begin
+      put_data(@statistics.sort(load.flatten))
+    rescue StandardError
+      put_data([])
     end
   end
 
