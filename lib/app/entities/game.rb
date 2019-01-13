@@ -63,8 +63,6 @@ class Game
 
   def rules
     if @game_mode == WEB
-      # rules = Rules.new
-      # put_data(rules.load_rules)
       put_data(I18n.t(:rules))
       return
     else
