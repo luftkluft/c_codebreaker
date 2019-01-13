@@ -63,7 +63,7 @@ class Game
 
   def rules
     if @game_mode == WEB
-      rules = Rules.new.load_ruless
+      rules = Rules.new.load_rules
       put_data(rules)
       return
     else
