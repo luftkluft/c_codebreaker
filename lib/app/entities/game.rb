@@ -54,7 +54,6 @@ class Game
   def setup_game_mode(mode = CONSOLE)
     if mode == WEB
       @game_mode = WEB
-      @statistics.game_mode = WEB
     end
   end
 
