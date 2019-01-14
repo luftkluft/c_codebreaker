@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe Game do
   let(:hints_array) { [1, 2] }
   let(:code) { [1, 2, 3, 4] }

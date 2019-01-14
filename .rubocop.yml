@@ -1,7 +1,8 @@
-# frozen_string_literal: true
-
 Metrics/LineLength:
   Max: 120
 
 Documentation:
+  Enabled: false
+
+FrozenStringLiteralComment:
   Enabled: false

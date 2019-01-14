@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 class Processor
-  MATCHED_DIGIT_CHAR = '+'
-  UNMATCHED_DIGIT_CHAR = '-'
+  MATCHED_DIGIT_CHAR = '+'.freeze
+  UNMATCHED_DIGIT_CHAR = '-'.freeze
 
   attr_reader :guess, :code
 

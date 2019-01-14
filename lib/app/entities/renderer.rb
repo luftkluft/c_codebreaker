@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Renderer
   include DataStorage
   attr_accessor :game_mode

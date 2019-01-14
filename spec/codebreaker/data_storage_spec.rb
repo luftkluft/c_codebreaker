@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe DataStorage do
   let(:path) { 'database/data_test.yml' }
   let(:subject) { Object.new.extend(DataStorage) }

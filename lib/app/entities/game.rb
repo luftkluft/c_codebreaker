@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Game
   include Validator
   include DataStorage
@@ -29,7 +27,7 @@ class Game
   CHOOSE_COMMANDS = {
     yes: 'y'
   }.freeze
-  HINT_COMMAND = 'hint'
+  HINT_COMMAND = 'hint'.freeze
   MIN_SIZE_VALUE = 3
   MAX_SIZE_VALUE = 20
   VALUE_FORMAT = /^[1-6]{4}$/.freeze
@@ -67,11 +65,9 @@ class Game
   end
 
   def load_web_stat
-    begin
-      put_data(@statistics.sort(load.flatten))
-    rescue StandardError
-      put_data([])
-    end
+    put_data(@statistics.sort(load.flatten))
+  rescue StandardError
+    put_data([])
   end
 
   def rules

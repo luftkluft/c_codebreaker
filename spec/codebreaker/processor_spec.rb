@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe Processor do
   context 'when testing #secret_code_proc method' do
     [

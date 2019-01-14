@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe Interface do
   include DataStorage
   let(:game) { Game.new }

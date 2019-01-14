@@ -1,8 +1,6 @@
-# frozen_string_literal: true
-
 module DataStorage
-  FILE_NAME = 'database/data.yml'
-  FILE_STORE = 'database/store.yml'
+  FILE_NAME = 'database/data.yml'.freeze
+  FILE_STORE = 'database/store.yml'.freeze
 
   def create
     File.new(FILE_NAME, 'w')

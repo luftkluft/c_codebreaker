@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 RSpec.describe Statistics do
   context 'when testing #get_stats method' do
     let(:player_1) do

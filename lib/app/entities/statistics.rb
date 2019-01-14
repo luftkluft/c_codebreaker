@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Statistics
   include DataStorage
   attr_accessor :game_mode
