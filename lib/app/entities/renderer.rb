@@ -1,10 +1,4 @@
 class Renderer
-  include DataStorage
-  attr_accessor :game_mode
-  def initialize
-    @game_mode = CONSOLE
-  end
-
   def message(msg_name, hash = {})
     puts I18n.t(msg_name, hash)
   end
