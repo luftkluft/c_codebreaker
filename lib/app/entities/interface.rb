@@ -1,5 +1,5 @@
 class Interface
-  include DataStorage
+  # include DataStorage
   attr_reader :game
   def initialize
     @game = Game.new
@@ -15,21 +15,21 @@ class Interface
 
   def start(name = '', level = '')
     @game.start(name, level)
-    send_data
+    @game.send_data
   end
 
   def rules
     @game.rules
-    send_data
+    @game.send_data
   end
 
   def stats
     @game.stats
-    send_data
+    @game.send_data
   end
 
   def game_process(guess = '', update_data = {})
     @game.game_process(guess, update_data)
-    send_data
+    @game.send_data
   end
 end

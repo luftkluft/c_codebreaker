@@ -23,18 +23,4 @@ module DataStorage
     create unless storage_exist?
     save(load.push(object))
   end
-
-  def put_data(object)
-    File.new(FILE_STORE, 'w') unless File.exist?(FILE_STORE)
-    File.open(FILE_STORE, 'w') { |file| file.write object.to_yaml }
-  end
-
-  def send_data
-    if File.exist?(FILE_STORE)
-      data = YAML.load_file(File.open(FILE_STORE))
-      File.delete(FILE_STORE)
-      return data
-    end
-    [Time.now.strftime('%d-%m-%Y %R')]
-  end
 end
