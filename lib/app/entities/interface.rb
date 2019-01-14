@@ -1,5 +1,4 @@
 class Interface
-  # include DataStorage
   attr_reader :game
   def initialize
     @game = Game.new

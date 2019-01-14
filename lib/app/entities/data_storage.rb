@@ -1,4 +1,4 @@
-module DataStorage
+class DataStorage
   FILE_NAME = 'database/data.yml'.freeze
   FILE_STORE = 'database/store.yml'.freeze
 

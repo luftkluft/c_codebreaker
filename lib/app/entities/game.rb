@@ -1,6 +1,5 @@
 class Game
   include Validator
-  include DataStorage
   DIGITS_COUNT = 4
   DIFFICULTIES = {
     easy: {
@@ -32,30 +31,24 @@ class Game
   MAX_SIZE_VALUE = 20
   VALUE_FORMAT = /^[1-6]{4}$/.freeze
 
-  @@store_data = [Time.now.strftime('%d-%m-%Y %R')]
+  @@send_data = [Time.now.strftime('%d-%m-%Y %R')]
 
   def put_data(store_data)
-    @@store_data = store_data
-    # File.new(FILE_STORE, 'w') unless File.exist?(FILE_STORE)
-    # File.open(FILE_STORE, 'w') { |file| file.write object.to_yaml }
+    @@send_data = store_data
   end
 
   def send_data
-    @@store_data
-    # if File.exist?(FILE_STORE)
-    #   data = YAML.load_file(File.open(FILE_STORE))
-    #   File.delete(FILE_STORE)
-    #   return data
-    # end
-    # [Time.now.strftime('%d-%m-%Y %R')]
+    @@send_data
   end
 
-  attr_accessor :attempts, :hints, :code, :name, :level, :guess, :difficulty, :game_mode, :renderer
+  attr_accessor :attempts, :hints, :code, :name, :level, :guess,
+                :difficulty, :game_mode, :renderer, :store
   def initialize
     @game_mode = CONSOLE
     @process = Processor.new
     @renderer = Renderer.new
     @statistics = Statistics.new
+    @store = DataStorage.new
     @attempts = 0
   end
 
@@ -77,13 +70,13 @@ class Game
       load_web_stat
       nil
     else
-      @statistics.get_stats(load)
+      @statistics.get_stats(@store.load)
       game_menu
     end
   end
 
   def load_web_stat
-    put_data(@statistics.sort(load.flatten))
+    put_data(@statistics.sort(@store.load.flatten))
   rescue StandardError
     put_data([])
   end
@@ -306,5 +299,17 @@ class Game
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
     @difficulty = Game::DIFFICULTIES[@level.to_sym]
+  end
+
+  def check_emptyness(value)
+    value.empty?
+  end
+
+  def check_length(value, min_size, max_size)
+    value.size.between?(min_size, max_size)
+  end
+
+  def check_command_range(command, format)
+    command =~ format
   end
 end
