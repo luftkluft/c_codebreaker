@@ -34,13 +34,13 @@ class Game
 
   @@store_data = [Time.now.strftime('%d-%m-%Y %R')]
 
-  def self.put_data(store_data)
+  def put_data(store_data)
     @@store_data = store_data
     # File.new(FILE_STORE, 'w') unless File.exist?(FILE_STORE)
     # File.open(FILE_STORE, 'w') { |file| file.write object.to_yaml }
   end
 
-  def self.send_data
+  def send_data
     @@store_data
     # if File.exist?(FILE_STORE)
     #   data = YAML.load_file(File.open(FILE_STORE))
@@ -83,14 +83,14 @@ class Game
   end
 
   def load_web_stat
-    self.put_data(@statistics.sort(load.flatten))
+    put_data(@statistics.sort(load.flatten))
   rescue StandardError
-    self.put_data([])
+    put_data([])
   end
 
   def rules
     if @game_mode == WEB
-      self.put_data(I18n.t(:rules))
+      put_data(I18n.t(:rules))
       nil
     else
       @renderer.rules
@@ -131,7 +131,7 @@ class Game
   def save_result
     if @game_mode == WEB
       @guess = ''
-      self.put_data(to_h(@name))
+      put_data(to_h(@name))
       save_game_result(to_h(@name))
       nil
     else
@@ -155,7 +155,7 @@ class Game
   def handle_lose
     if @game_mode == WEB
       @guess = ''
-      self.put_data(to_h(@name).update(code: @code.join))
+      put_data(to_h(@name).update(code: @code.join))
       nil
     else
       @renderer.lost_game_message(@code)
@@ -174,7 +174,7 @@ class Game
 
   def handle_command
     if @game_mode == WEB
-      self.put_data(start_process(@guess))
+      put_data(start_process(@guess))
       @guess = ''
     else
       return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
@@ -188,8 +188,8 @@ class Game
   def hint_process
     if @game_mode == WEB
       @guess = ''
-      self.put_data('no hints') && return if hints_spent?
-      self.put_data(take_hint!)
+      put_data('no hints') && return if hints_spent?
+      put_data(take_hint!)
     else
       return @renderer.no_hints_message? if hints_spent?
 
@@ -230,7 +230,7 @@ class Game
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
       @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
-      self.put_data(name: @name, level: @level,
+      put_data(name: @name, level: @level,
                attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
                hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
                code_array: @code, hints_array: @hints)
