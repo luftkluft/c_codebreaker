@@ -1,5 +1,4 @@
 class Game
-  include Validator
   DIGITS_COUNT = 4
   DIFFICULTIES = {
     easy: {

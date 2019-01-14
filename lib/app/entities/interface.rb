@@ -1,5 +1,4 @@
 class Interface
-  attr_reader :game
   def initialize
     @game = Game.new
   end
