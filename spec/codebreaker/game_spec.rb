@@ -21,7 +21,7 @@ RSpec.describe Game do
   let(:valid_name) { 'a' * rand(3..20) }
   let(:code) { [1, 1, 1, 1] }
   let(:path) { 'database/store.yml' }
-  include DataStorage
+  let(:store) { DataStorage.new }
   let(:statistics) { Statistics.new }
 
   let(:name) { 'Name' }
@@ -136,8 +136,8 @@ RSpec.describe Game do
 
     context 'when testing #stats method' do
       it 'returns stats' do
-        allow(load) { list }
-        allow(statistics).to receive(:get_stats).with(load)
+        allow(store.load) { list }
+        allow(statistics).to receive(:get_stats).with(store.load)
         expect(subject).to receive(:game_menu).and_return('exit')
         subject.send(:stats)
       end

@@ -1,6 +1,6 @@
 RSpec.describe DataStorage do
   let(:path) { 'database/data_test.yml' }
-  let(:subject) { Object.new.extend(DataStorage) }
+  # let(:subject) { Object.new.extend(DataStorage) }
 
   before do
     File.new(path, 'w+')

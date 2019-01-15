@@ -31,7 +31,7 @@ class Game
   VALUE_FORMAT = /^[1-6]{4}$/.freeze
 
   @@send_data = [Time.now.strftime('%d-%m-%Y %R')]
-
+  @@game_mode = CONSOLE
   def put_data(store_data)
     @@send_data = store_data
   end
@@ -40,21 +40,22 @@ class Game
     @@send_data
   end
 
+  def setup_game_mode(mode = CONSOLE)
+    @@game_mode = WEB if mode == WEB
+  end
+
+  def game_mode
+    @@game_mode
+  end
+
   attr_accessor :attempts, :hints, :code, :name, :level, :guess,
-                :difficulty, :game_mode, :renderer, :store
+                :difficulty, :renderer, :store
   def initialize
-    @game_mode = CONSOLE
     @process = Processor.new
     @renderer = Renderer.new
     @statistics = Statistics.new
     @store = DataStorage.new
     @attempts = 0
-  end
-
-  def setup_game_mode(mode = CONSOLE)
-    if mode == WEB
-      @game_mode = WEB
-    end
   end
 
   def game_menu
@@ -63,7 +64,7 @@ class Game
   end
 
   def stats
-    if @game_mode == WEB
+    if @@game_mode == WEB
       load_web_stat
       nil
     else
@@ -79,7 +80,7 @@ class Game
   end
 
   def rules
-    if @game_mode == WEB
+    if @@game_mode == WEB
       put_data(I18n.t(:rules))
       nil
     else
@@ -119,13 +120,13 @@ class Game
   end
 
   def save_result
-    if @game_mode == WEB
+    if @@game_mode == WEB
       @guess = ''
       put_data(to_h(@name))
-      save_game_result(to_h(@name))
+      @store.save_game_result(to_h(@name))
       nil
     else
-      save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
+      @store.save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
     end
   end
 
@@ -143,7 +144,7 @@ class Game
   end
 
   def handle_lose
-    if @game_mode == WEB
+    if @@game_mode == WEB
       @guess = ''
       put_data(to_h(@name).update(code: @code.join))
       nil
@@ -163,20 +164,20 @@ class Game
   end
 
   def handle_command
-    if @game_mode == WEB
+    if @@game_mode == WEB
       put_data(start_process(@guess))
       @guess = ''
     else
       return @renderer.command_error unless check_command_range(@guess, VALUE_FORMAT)
 
-      p start_process(@guess)
+      puts start_process(@guess)
       @renderer.round_message
     end
     decrease_attempts!
   end
 
   def hint_process
-    if @game_mode == WEB
+    if @@game_mode == WEB
       @guess = ''
       put_data('no hints') && return if hints_spent?
       put_data(take_hint!)
@@ -188,7 +189,7 @@ class Game
   end
 
   def handle_win
-    if @game_mode == WEB
+    if @@game_mode == WEB
       @guess = ''
       save_result
       nil
@@ -207,7 +208,7 @@ class Game
     when COMMANDS[:stats] then stats
     else
       @renderer.command_error
-      game_menu unless @game_mode == WEB
+      game_menu unless @@game_mode == WEB
     end
   end
 
@@ -216,7 +217,7 @@ class Game
     @name = register_user if name.empty?
     @level = level
     @level = level_choice if level.empty?
-    if @game_mode == WEB
+    if @@game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
       @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
@@ -226,11 +227,11 @@ class Game
                code_array: @code, hints_array: @hints)
     end
 
-    game_process if @game_mode == CONSOLE
+    game_process if @@game_mode == CONSOLE
   end
 
   def game_process(guess = '', update_data = {})
-    if @game_mode == WEB
+    if @@game_mode == WEB
       return if guess.empty?
 
       @guess = guess
@@ -238,7 +239,7 @@ class Game
     end
 
     while @attempts.positive?
-      @guess = ask if guess.empty? && @game_mode == CONSOLE
+      @guess = ask if guess.empty? && @@game_mode == CONSOLE
       return handle_win if win?(@guess)
 
       choice_code_process
@@ -274,7 +275,7 @@ class Game
 
   def generate(difficulty)
     @difficulty = difficulty
-    if @game_mode == CONSOLE
+    if @@game_mode == CONSOLE
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
       @hints = @code.sample(difficulty[:hints])
       @attempts = difficulty[:attempts]
