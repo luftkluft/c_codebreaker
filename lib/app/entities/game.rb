@@ -89,7 +89,44 @@ class Game
     end
   end
 
-  # private
+  def start(name = '', level = '')
+    @name = name
+    @name = register_user if name.empty?
+    @level = level
+    @level = level_choice if level.empty?
+    if @@game_mode == WEB
+      @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
+      @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
+      @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
+      put_data(name: @name, level: @level,
+               attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
+               hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
+               code_array: @code, hints_array: @hints)
+    end
+
+    game_process if @@game_mode == CONSOLE
+  end
+
+  def game_process(guess = '', update_data = {})
+    if @@game_mode == WEB
+      return if guess.empty?
+
+      @guess = guess
+      update_game(update_data)
+    end
+
+    while @attempts.positive?
+      @guess = ask if guess.empty? && @@game_mode == CONSOLE
+      return handle_win if win?(@guess)
+
+      choice_code_process
+      return if @guess.empty?
+    end
+
+    handle_lose
+  end
+
+  private
 
   def generate_game(difficulty)
     generate(difficulty)
@@ -210,43 +247,6 @@ class Game
       @renderer.command_error
       game_menu unless @@game_mode == WEB
     end
-  end
-
-  def start(name = '', level = '')
-    @name = name
-    @name = register_user if name.empty?
-    @level = level
-    @level = level_choice if level.empty?
-    if @@game_mode == WEB
-      @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
-      @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
-      @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
-      put_data(name: @name, level: @level,
-               attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
-               hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
-               code_array: @code, hints_array: @hints)
-    end
-
-    game_process if @@game_mode == CONSOLE
-  end
-
-  def game_process(guess = '', update_data = {})
-    if @@game_mode == WEB
-      return if guess.empty?
-
-      @guess = guess
-      update_game(update_data)
-    end
-
-    while @attempts.positive?
-      @guess = ask if guess.empty? && @@game_mode == CONSOLE
-      return handle_win if win?(@guess)
-
-      choice_code_process
-      return if @guess.empty?
-    end
-
-    handle_lose
   end
 
   def decrease_attempts!

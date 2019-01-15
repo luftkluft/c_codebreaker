@@ -36,7 +36,7 @@ RSpec.describe Game do
   end
 
   it '.update_game' do
-    subject.update_game(update_data)
+    subject.send(:update_game, update_data)
     expect(subject.instance_variable_get('@hints')).to be_a Array
     expect(subject.instance_variable_get('@hints').size).to be 2
     expect(subject.instance_variable_get('@attempts')).to be 5
@@ -46,14 +46,14 @@ RSpec.describe Game do
     it 'returnes last el of hints array' do
       subject.instance_variable_set(:@hints, hints_array)
       expected_value = subject.hints.last
-      expect(subject.take_hint!).to eq expected_value
+      expect(subject.send(:take_hint!)).to eq expected_value
     end
   end
 
   context 'when #generate method' do
     it do
       difficulty = Game::DIFFICULTIES[:easy]
-      subject.generate(difficulty)
+      subject.send(:generate, difficulty)
       expect(subject.attempts).to eq difficulty[:attempts]
       expect(subject.instance_variable_get(:@difficulty)).to eq difficulty
       subject.instance_variable_set(:@hints, hints_array)
@@ -67,26 +67,26 @@ RSpec.describe Game do
       win_code = Array.new(Game::DIGITS_COUNT, Processor::MATCHED_DIGIT_CHAR)
       subject.instance_variable_set(:@code, win_code)
       expect(process).to receive(:secret_code_proc).with(win_code.join, start_code)
-      subject.start_process(start_code)
+      subject.send(:start_process, start_code)
     end
   end
 
   context 'used #decrease_attempts! method' do
     it 'decreases attempts by one when used' do
       subject.instance_variable_set(:@attempts, 3)
-      expect { subject.decrease_attempts! }.to change(subject, :attempts).by(-1)
+      expect { subject.send(:decrease_attempts!) }.to change(subject, :attempts).by(-1)
     end
   end
 
   context 'when testing #hints_spent? method' do
     it 'returns true' do
       subject.instance_variable_set(:@hints, [])
-      expect(subject.hints_spent?).to be true
+      expect(subject.send(:hints_spent?)).to be true
     end
 
     it 'returns false' do
       subject.instance_variable_set(:@hints, [1, 2])
-      expect(subject.hints_spent?).to be false
+      expect(subject.send(:hints_spent?)).to be false
     end
   end
 
@@ -95,7 +95,7 @@ RSpec.describe Game do
       subject.instance_variable_set(:@difficulty, Game::DIFFICULTIES[:easy])
       subject.instance_variable_set(:@attempts, 2)
       subject.instance_variable_set(:@hints, hints_array)
-      expect(subject.to_h(valid_name)).to be_an_instance_of(Hash)
+      expect(subject.send(:to_h, valid_name)).to be_an_instance_of(Hash)
     end
   end
 
