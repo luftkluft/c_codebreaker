@@ -66,7 +66,7 @@ RSpec.describe Game do
       process = subject.instance_variable_get(:@process)
       win_code = Array.new(Game::DIGITS_COUNT, Processor::MATCHED_DIGIT_CHAR)
       subject.instance_variable_set(:@code, win_code)
-      expect(process).to receive(:secret_code_proc).with(win_code.join, start_code)
+      expect(process).to receive(:guess_test).with(win_code.join, start_code)
       subject.send(:start_process, start_code)
     end
   end

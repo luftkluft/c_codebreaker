@@ -283,7 +283,7 @@ class Game
   end
 
   def start_process(command)
-    @process.secret_code_proc(@code.join, command)
+    @process.guess_test(@code.join, command)
   end
 
   def win?(guess)
