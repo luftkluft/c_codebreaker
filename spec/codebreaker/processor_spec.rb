@@ -1,5 +1,5 @@
 RSpec.describe Processor do
-  context 'when testing #secret_code_proc method' do
+  context 'when testing #guess_test method' do
     [
       ['1234', '1234', '++++'], ['1234', '4321', '----'], ['1231', '1234', '+++'],
       ['1134', '1431', '++--'], ['1324', '1234', '++--'], ['1111', '1321', '++'],
@@ -148,7 +148,7 @@ RSpec.describe Processor do
       ['1234', '4343', '--']
     ].each do |value|
       it "tests that #{value.first} equals to #{value.last}" do
-        expect(subject.secret_code_proc(value[1], value[0])).to eq value.last
+        expect(subject.guess_test(value[1], value[0])).to eq value.last
       end
     end
   end

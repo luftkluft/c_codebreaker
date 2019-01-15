@@ -53,7 +53,7 @@ RSpec.describe Game do
   context 'when #generate method' do
     it do
       difficulty = Game::DIFFICULTIES[:easy]
-      subject.send(:generate, difficulty)
+      subject.send(:setup_difficulty, difficulty)
       expect(subject.attempts).to eq difficulty[:attempts]
       expect(subject.instance_variable_get(:@difficulty)).to eq difficulty
       subject.instance_variable_set(:@hints, hints_array)
@@ -243,7 +243,7 @@ RSpec.describe Game do
   context 'when testing #generate_game method' do
     it do
       difficulty = Game::DIFFICULTIES[:easy]
-      expect(subject).to receive(:generate).with(difficulty)
+      expect(subject).to receive(:setup_difficulty).with(difficulty)
       expect(subject.renderer).to receive(:message).with(:difficulty,
                                                          hints: difficulty[:hints],
                                                          attempts: difficulty[:attempts])

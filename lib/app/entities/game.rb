@@ -129,7 +129,7 @@ class Game
   private
 
   def generate_game(difficulty)
-    generate(difficulty)
+    setup_difficulty(difficulty)
     @renderer.message(:difficulty,
                       hints: difficulty[:hints],
                       attempts: difficulty[:attempts])
@@ -273,7 +273,7 @@ class Game
     @hints.pop
   end
 
-  def generate(difficulty)
+  def setup_difficulty(difficulty)
     @difficulty = difficulty
     if @@game_mode == CONSOLE
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }

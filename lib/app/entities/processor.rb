@@ -4,7 +4,7 @@ class Processor
 
   attr_reader :guess, :code
 
-  def secret_code_proc(code, guess)
+  def guess_test(code, guess)
     @code = code.split('')
     @guess = guess.split('')
     (handle_matched_digits + handle_matched_digits_with_wrong_position).join
@@ -16,7 +16,8 @@ class Processor
     code.map.with_index do |_, index|
       next unless code[index] == guess[index]
 
-      @guess[index], @code[index] = nil
+      @guess[index] = nil
+      @code[index] = nil
       MATCHED_DIGIT_CHAR
     end
   end
