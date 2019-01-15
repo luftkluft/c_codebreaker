@@ -96,11 +96,11 @@ class Game
     @level = level_choice if level.empty?
     if @@game_mode == WEB
       @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
-      @hints = @code.sample(Game::DIFFICULTIES[level.to_sym][:hints])
-      @attempts = (Game::DIFFICULTIES[level.to_sym])[:attempts]
+      @hints = @code.sample(DIFFICULTIES[level.to_sym][:hints])
+      @attempts = (DIFFICULTIES[level.to_sym])[:attempts]
       put_data(name: @name, level: @level,
-               attempts: (Game::DIFFICULTIES[level.to_sym])[:attempts],
-               hints: (Game::DIFFICULTIES[level.to_sym])[:hints],
+               attempts: (DIFFICULTIES[level.to_sym])[:attempts],
+               hints: (DIFFICULTIES[level.to_sym])[:hints],
                code_array: @code, hints_array: @hints)
     end
 
@@ -147,8 +147,8 @@ class Game
 
   def level_choice
     loop do
-      @level = ask(:hard_level, levels: Game::DIFFICULTIES.keys.join(' | '))
-      return generate_game(Game::DIFFICULTIES[level.to_sym]) if Game::DIFFICULTIES[level.to_sym]
+      @level = ask(:hard_level, levels: DIFFICULTIES.keys.join(' | '))
+      return generate_game(DIFFICULTIES[level.to_sym]) if DIFFICULTIES[level.to_sym]
 
       return game_menu if @level == COMMANDS[:exit]
 
@@ -296,7 +296,7 @@ class Game
     @code = update_data[:code_array]
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
-    @difficulty = Game::DIFFICULTIES[@level.to_sym]
+    @difficulty = DIFFICULTIES[@level.to_sym]
   end
 
   def check_emptyness(value)

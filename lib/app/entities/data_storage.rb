@@ -1,6 +1,5 @@
 class DataStorage
   FILE_NAME = 'database/data.yml'.freeze
-  FILE_STORE = 'database/store.yml'.freeze
 
   def create
     File.new(FILE_NAME, 'w')
