@@ -1,13 +1,13 @@
 require 'simplecov'
 
+require 'simplecov'
 SimpleCov.start do
+  add_filter '/spec/'
   minimum_coverage 95
 end
-
-require_relative '../autoload.rb'
 require 'rspec'
+require 'rubocop-rspec'
 require 'bundler/setup'
-require 'c_codebreaker'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -1,3 +1,3 @@
 module CCodebreaker
-  VERSION = '1.9.4'.freeze
+  VERSION = '2.0.0'.freeze
 end
