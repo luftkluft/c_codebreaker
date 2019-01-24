@@ -11,6 +11,7 @@ class Output
 
   def put_console(msg_name, hash = {})
     puts I18n.t(msg_name, hash)
+    put_storage(I18n.t(msg_name, hash))
   end
 
   def start_message

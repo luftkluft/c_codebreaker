@@ -12,6 +12,7 @@ RSpec.describe Output do
     it 'return puts I18n' do
       msg = :start_message
       expect(I18n).to receive(:t).with(msg, {})
+      expect(I18n).to receive(:t).with(msg, {})
       subject.put_console(msg)
     end
   end
