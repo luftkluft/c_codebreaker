@@ -8,6 +8,7 @@ end
 require 'rspec'
 require 'rubocop-rspec'
 require 'bundler/setup'
+require_relative '../autoload.rb'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
