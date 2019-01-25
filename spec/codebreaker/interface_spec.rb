@@ -3,7 +3,6 @@ RSpec.describe Interface do
   let(:data) { Output.new }
   let(:name) { 'Name' }
   let(:level) { 'easy' }
-  let(:path) { 'database/store.yml' }
   let(:guess) { '1234' }
   let(:hint) { 'hint' }
   let(:code_array) { [1, 2, 3, 4] }
@@ -23,5 +22,12 @@ RSpec.describe Interface do
 
   it '.stats' do
     expect(subject.stats).to be_a Array
+  end
+
+  it '.start with params' do
+    subject.start(name, level)
+    expect(data.take_storage).to be_a Hash
+    expect(data.take_storage.size).to be 6
+    expect(data.take_storage[:name]).to eq(name)
   end
 end

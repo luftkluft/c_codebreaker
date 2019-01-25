@@ -71,4 +71,61 @@ RSpec.describe Game do
       subject.send(:choice_menu_process, command)
     end
   end
+
+  context 'when #start_info method' do
+    it do
+      difficulty = Game::DIFFICULTIES[:easy]
+      subject.send(:setup_difficulty, difficulty)
+      expect(subject.attempts).to eq difficulty[:attempts]
+      expect(subject.instance_variable_get(:@difficulty)).to eq difficulty
+      subject.instance_variable_set(:@hints, hints_array)
+      expect(code).to include(*subject.instance_variable_get(:@hints))
+    end
+  end
+
+  xcontext 'when testing #console start method' do
+    it do
+      expect(subject).to receive(:register_user)
+      expect(subject).to receive(:level_choice)
+      expect(subject).to receive(:game_process)
+      subject.send(:start)
+    end
+  end
+
+  context 'when testing #registration method' do
+    it 'set name' do
+      expect(subject).to receive(:ask).with(:registration).and_return(valid_name)
+      subject.send(:register_user)
+    end
+  end
+
+  context 'when testing #level_choice method' do
+    it 'returns #generate_game' do
+      level = Game::DIFFICULTIES.keys.first
+      expect(subject).to receive(:ask).with(:hard_level, levels: Game::DIFFICULTIES.keys.join(' | ')) { level }
+      expect(subject).to receive(:start_info).with(Game::DIFFICULTIES[level.to_sym])
+      subject.send(:level_choice)
+    end
+
+    it 'returns #game_menu' do
+      exit = Game::COMMANDS[:exit]
+      expect(subject).to receive(:ask).with(:hard_level, levels: Game::DIFFICULTIES.keys.join(' | ')) { exit }
+      expect(subject).to receive(:game_menu)
+      subject.send(:level_choice)
+    end
+
+    it 'returns #command_error' do
+      expect(subject).to receive(:ask).with(:hard_level, levels: Game::DIFFICULTIES.keys.join(' | ')) { command }
+      expect(subject.output).to receive(:command_error)
+      allow(subject).to receive(:loop).and_yield
+      subject.send(:level_choice)
+    end
+  end
+
+  it '.update_game' do
+    subject.send(:update_game, update_data)
+    expect(subject.instance_variable_get('@hints')).to be_a Array
+    expect(subject.instance_variable_get('@hints').size).to be 2
+    expect(subject.instance_variable_get('@attempts')).to be 5
+  end
 end
