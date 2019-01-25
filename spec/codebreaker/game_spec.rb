@@ -128,4 +128,39 @@ RSpec.describe Game do
     expect(subject.instance_variable_get('@hints').size).to be 2
     expect(subject.instance_variable_get('@attempts')).to be 5
   end
+
+  context 'when testing #game_process method' do
+    it 'returns #handle_win' do
+      subject.instance_variable_set(:@attempts, Game::DIFFICULTIES[:easy][:attempts])
+      expect(subject).to receive(:ask) { command }
+      expect(subject).to receive(:win?).with(command) { true }
+      expect(subject).to receive(:handle_win)
+      subject.send(:game_process)
+    end
+    it 'retuns #handle_lose' do
+      subject.instance_variable_set(:@attempts, 0)
+      expect(subject).to receive(:handle_lose)
+      subject.send(:game_process)
+    end
+  end
+
+  context 'when testing #choice_code_process method' do
+    xit 'returns #take_a_hint!' do
+      subject.instance_variable_set(:@guess, Game::HINT_COMMAND)
+      expect(subject).to receive(:hint_process)
+      subject.send(:choice_code_process)
+    end
+
+    it 'returns #game_menu' do
+      subject.instance_variable_set(:@guess, Game::COMMANDS[:exit])
+      expect(subject).to receive(:game_menu)
+      subject.send(:choice_code_process)
+    end
+
+    it 'returns #handle_command' do
+      subject.instance_variable_set(:@guess, command)
+      expect(subject).to receive(:handle_command)
+      subject.send(:choice_code_process)
+    end
+  end
 end

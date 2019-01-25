@@ -37,6 +37,8 @@ class Game
     @output = Output.new
     @statistics = Statistics.new
     @store = Uploader.new
+    @process = Processor.new
+    @save_result = false
   end
 
   def game_menu
@@ -46,7 +48,7 @@ class Game
 
   def choice_menu_process(command_name)
     case command_name
-    when COMMANDS[:start] then start # && game_process
+    when COMMANDS[:start] then start && game_process
     when COMMANDS[:exit] then exit_from_game
     when COMMANDS[:rules] then rules && game_menu
     when COMMANDS[:stats] then stats && game_menu
@@ -106,7 +108,7 @@ class Game
 
   def game_process(guess = '', update_data = {})
     @guess = guess
-    update_game(update_data)
+    update_game(update_data) unless @guess.empty?
     while @attempts.positive?
       @guess = ask if guess.empty?
       return handle_win if win?(@guess)
@@ -116,6 +118,67 @@ class Game
     handle_lose
   end
 
+  def win?(guess)
+    @code.join == guess
+  end
+
+  def handle_lose
+    @output.lost_game_message(@code)
+    @output.put_storage(to_h(@name).update(code: @code.join))
+    game_menu if @save_result == false
+  end
+
+  def handle_win
+    @output.win_game_message
+    @output.put_storage(to_h(@name).update(code: @code.join))
+    save_result
+    game_menu if @save_result == false
+  end
+
+  def save_result
+    return @store.save_game_result(to_h(@name)) if @save_result == true
+
+    @store.save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
+  end
+
+  def to_h(name)
+    {
+      name: name,
+      difficulty: DIFFICULTIES.key(@difficulty),
+      all_attempts: @difficulty[:attempts],
+      all_hints: @difficulty[:hints],
+      attempts_used: @difficulty[:attempts] - @attempts,
+      hints_used: @difficulty[:hints] - @hints.length,
+      date: Time.now.strftime('%d-%m-%Y %R')
+    }
+  end
+
+  def choice_code_process
+    case @guess
+    when HINT_COMMAND then hint_process
+    when COMMANDS[:exit] then game_menu
+    else
+      handle_command
+    end
+  end
+
+  def handle_command
+    return @output.command_error unless check_command_range(@guess, VALUE_FORMAT)
+
+    @output.put_storage(start_process(@guess))
+    puts start_process(@guess)
+    @output.round_message
+    decrease_attempts!
+  end
+
+  def decrease_attempts!
+    @attempts -= 1
+  end
+
+  def start_process(command)
+    @process.guess_comparison(@code.join, command)
+  end
+
   def update_game(update_data)
     @name = update_data[:name]
     @level = update_data[:level]
@@ -123,6 +186,7 @@ class Game
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
     @difficulty = DIFFICULTIES[@level.to_sym]
+    @save_result = true
   end
 
   def rules

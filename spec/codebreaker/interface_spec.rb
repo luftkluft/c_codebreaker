@@ -30,4 +30,17 @@ RSpec.describe Interface do
     expect(data.take_storage.size).to be 6
     expect(data.take_storage[:name]).to eq(name)
   end
+
+  context 'with .game_process' do
+    it 'guess request' do
+      subject.game_process(guess, update_data)
+      expect(data.take_storage).to be_a Hash
+      expect(data.take_storage.size).to be 8
+      expect(data.take_storage[:name]).to eq(name)
+    end
+    it 'hint request' do
+      # subject.game_process(winner_guess, update_data)
+      # expect(data.take_storage).to match(/You won the game! Congrats!/)
+    end
+  end
 end
