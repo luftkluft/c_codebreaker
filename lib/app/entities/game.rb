@@ -129,7 +129,7 @@ class Game
 
   def handle_win
     @output.win_game_message
-    @output.put_storage(to_h(@name).update(code: @code.join))
+    @output.put_storage(to_h(@name))
     save_result
     game_menu if @update_game == false
   end
