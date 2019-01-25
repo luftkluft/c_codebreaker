@@ -1,5 +1,3 @@
-WEB = 'web'.freeze
-CONSOLE = 'console'.freeze
 TEST_PATH = 'database/test.yml'.freeze
 SCORE_DATABASE = 'database/data.yml'.freeze
 TEST_LEVEL = 'hell'.freeze
@@ -11,3 +9,5 @@ UNKNOWN_MESSAGE = 'Unknown message!'.freeze
 HAVE_NO_HINTS = 'You have no hints!'.freeze
 OOPS = 'OOps!'.freeze
 TO_HOME = '/'.freeze
+HINT_NUMBER = /Hint number:/.freeze
+ANSWER = /[+-]/.freeze

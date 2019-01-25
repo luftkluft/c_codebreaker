@@ -2,6 +2,7 @@ RSpec.describe Game do
   let(:hints_array) { [1, 2] }
   let(:code) { [1, 2, 3, 4] }
   let(:command) { '1111' }
+  let(:informat_guess) { '12345' }
   let(:valid_name) { 'a' * rand(3..20) }
   let(:invalid_name) { 'a' * rand(0..2) }
   let(:list) do
@@ -23,6 +24,7 @@ RSpec.describe Game do
   let(:path) { 'database/store.yml' }
   let(:store) { Uploader.new }
   let(:statistics) { Statistics.new }
+  let(:output) { Output.new }
 
   let(:name) { 'Name' }
   let(:level) { 'easy' }
@@ -83,15 +85,6 @@ RSpec.describe Game do
     end
   end
 
-  xcontext 'when testing #console start method' do
-    it do
-      expect(subject).to receive(:register_user)
-      expect(subject).to receive(:level_choice)
-      expect(subject).to receive(:game_process)
-      subject.send(:start)
-    end
-  end
-
   context 'when testing #registration method' do
     it 'set name' do
       expect(subject).to receive(:ask).with(:registration).and_return(valid_name)
@@ -130,6 +123,10 @@ RSpec.describe Game do
   end
 
   context 'when testing #game_process method' do
+    before do
+      subject.send(:update_game, update_data)
+    end
+
     it 'returns #handle_win' do
       subject.instance_variable_set(:@attempts, Game::DIFFICULTIES[:easy][:attempts])
       expect(subject).to receive(:ask) { command }
@@ -142,10 +139,16 @@ RSpec.describe Game do
       expect(subject).to receive(:handle_lose)
       subject.send(:game_process)
     end
+
+    it '#handle_lose message' do
+      subject.instance_variable_set(:@attempts, 0)
+      subject.send(:handle_lose)
+      expect(output.take_storage[:code]).to eq(code_array.join)
+    end
   end
 
   context 'when testing #choice_code_process method' do
-    xit 'returns #take_a_hint!' do
+    it 'returns #take_hint!' do
       subject.instance_variable_set(:@guess, Game::HINT_COMMAND)
       expect(subject).to receive(:hint_process)
       subject.send(:choice_code_process)
@@ -161,6 +164,38 @@ RSpec.describe Game do
       subject.instance_variable_set(:@guess, command)
       expect(subject).to receive(:handle_command)
       subject.send(:choice_code_process)
+    end
+  end
+
+  context '.handle_command' do
+    before do
+      subject.send(:update_game, update_data)
+    end
+
+    it '#true guess' do
+      subject.instance_variable_set(:@guess, command)
+      subject.send(:handle_command)
+      expect(output.take_storage).to match(ANSWER)
+    end
+
+    it '#informat guess' do
+      subject.instance_variable_set(:@guess, informat_guess)
+      subject.send(:handle_command)
+      expect(output.take_storage).to match(I18n.t('command_error'))
+    end
+  end
+
+  context '.hint_process' do
+    it 'hint array is empty' do
+      subject.instance_variable_set(:@hints, [])
+      subject.send(:hint_process)
+      expect(output.take_storage).to match(I18n.t('have_no_hints_message'))
+    end
+
+    it 'hint array is sized' do
+      subject.instance_variable_set(:@hints, hints_array)
+      subject.send(:hint_process)
+      expect(output.take_storage).to match(HINT_NUMBER)
     end
   end
 end

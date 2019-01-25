@@ -1,4 +1,3 @@
-require 'pry'
 class Game
   DIGITS_COUNT = 4
   DIFFICULTIES = {
@@ -38,7 +37,7 @@ class Game
     @statistics = Statistics.new
     @store = Uploader.new
     @process = Processor.new
-    @save_result = false
+    @update_game = false
   end
 
   def game_menu
@@ -107,13 +106,13 @@ class Game
   end
 
   def game_process(guess = '', update_data = {})
-    @guess = guess
-    update_game(update_data) unless @guess.empty?
+    update_game(update_data) && @guess = guess unless guess.empty?
     while @attempts.positive?
       @guess = ask if guess.empty?
       return handle_win if win?(@guess)
 
       choice_code_process
+      return if @update_game == true
     end
     handle_lose
   end
@@ -125,18 +124,18 @@ class Game
   def handle_lose
     @output.lost_game_message(@code)
     @output.put_storage(to_h(@name).update(code: @code.join))
-    game_menu if @save_result == false
+    game_menu if @update_game == false
   end
 
   def handle_win
     @output.win_game_message
     @output.put_storage(to_h(@name).update(code: @code.join))
     save_result
-    game_menu if @save_result == false
+    game_menu if @update_game == false
   end
 
   def save_result
-    return @store.save_game_result(to_h(@name)) if @save_result == true
+    return @store.save_game_result(to_h(@name)) if @update_game == true
 
     @store.save_game_result(to_h(@name)) if ask(:save_results_message) == CHOOSE_COMMANDS[:yes]
   end
@@ -162,12 +161,26 @@ class Game
     end
   end
 
+  def hint_process
+    return @output.no_hints_message? if hints_spent?
+
+    @output.print_hint_number(take_hint!)
+  end
+
+  def take_hint!
+    @hints.pop
+  end
+
+  def hints_spent?
+    @hints.empty?
+  end
+
   def handle_command
     return @output.command_error unless check_command_range(@guess, VALUE_FORMAT)
 
-    @output.put_storage(start_process(@guess))
     puts start_process(@guess)
     @output.round_message
+    @output.put_storage(start_process(@guess))
     decrease_attempts!
   end
 
@@ -186,7 +199,7 @@ class Game
     @hints = update_data[:hints_array]
     @attempts = update_data[:attempts]
     @difficulty = DIFFICULTIES[@level.to_sym]
-    @save_result = true
+    @update_game = true
   end
 
   def rules

@@ -3,7 +3,8 @@ RSpec.describe Interface do
   let(:data) { Output.new }
   let(:name) { 'Name' }
   let(:level) { 'easy' }
-  let(:guess) { '1234' }
+  let(:winner_guess) { '1234' }
+  let(:guess) { '1111' }
   let(:hint) { 'hint' }
   let(:code_array) { [1, 2, 3, 4] }
   let(:attempts) { 5 }
@@ -17,7 +18,7 @@ RSpec.describe Interface do
 
   it '.rules' do
     subject.rules
-    expect(data.take_storage).to match(/Codebreaker is a logic/)
+    expect(data.take_storage).to match(I18n.t('rules'))
   end
 
   it '.stats' do
@@ -32,15 +33,21 @@ RSpec.describe Interface do
   end
 
   context 'with .game_process' do
-    it 'guess request' do
-      subject.game_process(guess, update_data)
+    it 'winner_guess request' do
+      subject.game_process(winner_guess, update_data)
       expect(data.take_storage).to be_a Hash
       expect(data.take_storage.size).to be 8
       expect(data.take_storage[:name]).to eq(name)
     end
+
+    it 'guess request' do
+      subject.game_process('1111', update_data)
+      expect(data.take_storage).to match(ANSWER)
+    end
+
     it 'hint request' do
-      # subject.game_process(winner_guess, update_data)
-      # expect(data.take_storage).to match(/You won the game! Congrats!/)
+      subject.game_process(hint, update_data)
+      expect(data.take_storage).to match(HINT_NUMBER)
     end
   end
 end
