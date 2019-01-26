@@ -1,3 +1,4 @@
+require 'pry'
 class Game
   COMMANDS = {
     start: 'start',
@@ -73,8 +74,9 @@ class Game
   end
 
   def saved_data
-    { name: '@name', update_game: @update_game, difficulty: @difficulty,
+    { name: @name, update_game: @update_game, difficulty: @difficulty,
       attempts: @attempts, hints: @hints, code: @code }
+      binding.pry
   end
 
   def handle_win
