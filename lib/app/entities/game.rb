@@ -96,7 +96,7 @@ class Game
     return @output.command_error unless @validator.check_command_range(@guess, VALUE_FORMAT)
 
     puts start_process(@guess)
-    @output.round_message
+    @output.round_message if @update_game == false
     @output.put_storage(start_process(@guess))
     decrease_attempts!
   end
