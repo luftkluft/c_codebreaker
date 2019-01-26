@@ -1,13 +1,17 @@
 class Painter
   def paint_answer(answer)
     mark = []
+    sign = []
     Registration::DIGITS_COUNT.times do |index|
-      next mark[index] = 'success' if answer[index] == '+'
-      next mark[index] = 'primary' if answer[index] == '-'
+      mark[index] = 'success' if answer[index] == '+'
+      next sign[index] = '+' if answer[index] == '+'
 
-      answer[index] = 'x'
+      mark[index] = 'primary' if answer[index] == '-'
+      next sign[index] = '-' if answer[index] == '-'
+
+      sign[index] = 'x'
       mark[index] = 'danger'
     end
-    { answer: answer, mark: mark }
+    { answer: sign, mark: mark }
   end
 end
