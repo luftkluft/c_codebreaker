@@ -20,7 +20,6 @@ class Game
     @validator = Validator.new
     @hint = Hint.new
     @registration = Registration.new
-    @name = 'Player'
   end
 
   def game_menu
@@ -74,7 +73,7 @@ class Game
   end
 
   def saved_data
-    { name: @name, update_game: @update_game, difficulty: @difficulty,
+    { name: '@name', update_game: @update_game, difficulty: @difficulty,
       attempts: @attempts, hints: @hints, code: @code }
   end
 
