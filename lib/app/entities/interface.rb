@@ -1,7 +1,8 @@
 class Interface
   def initialize
     @game = Game.new
-    @data = Output.new
+    @output = Output.new
+    @painter = Painter.new
   end
 
   def game_menu
@@ -10,21 +11,25 @@ class Interface
 
   def start(name = '', level = '')
     @game.start(name, level)
-    @data.take_storage
+    @output.take_storage
   end
 
   def rules
     @game.rules
-    @data.take_storage
+    @output.take_storage
   end
 
   def stats
     @game.stats
-    @data.take_storage
+    @output.take_storage
   end
 
   def game_process(guess = '', update_data = {})
     @game.game_process(guess, update_data)
-    @data.take_storage
+    @output.take_storage
+  end
+
+  def paint_answer(answer)
+    @painter.paint_answer(answer)
   end
 end

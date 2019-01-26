@@ -1,6 +1,6 @@
 class Statistics
   def get_stats(scores)
-    render_stats(sort(scores)) if scores
+    scores ? render_stats(sort(scores)) : []
   end
 
   def sort(list)

@@ -1,6 +1,7 @@
 RSpec.describe Interface do
   let(:game) { Game.new }
   let(:data) { Output.new }
+  let(:painter) { Painter.new }
   let(:name) { 'Name' }
   let(:level) { 'easy' }
   let(:winner_guess) { '1234' }
@@ -14,6 +15,12 @@ RSpec.describe Interface do
       code_array: code_array,
       hints_array: hints_array,
       attempts: attempts }
+  end
+  let(:answer) { '+-' }
+  let(:paint_result) { { answer: '+-xx', mark: %w[success primary danger danger] } }
+
+  it '.paint_answer' do
+    expect(subject.paint_answer(answer)).to eq(paint_result)
   end
 
   it '.rules' do

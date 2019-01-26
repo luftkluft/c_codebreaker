@@ -3,7 +3,7 @@ RSpec.describe Statistics do
     let(:player_1) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.first.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.first.to_s,
         all_attempts: 15,
         attempts_used: 10,
         all_hints: 2,
@@ -13,7 +13,7 @@ RSpec.describe Statistics do
     let(:player_2) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.first.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.first.to_s,
         all_attempts: 15,
         attempts_used: 15,
         all_hints: 2,
@@ -23,7 +23,7 @@ RSpec.describe Statistics do
     let(:player_3) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.first.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.first.to_s,
         all_attempts: 15,
         attempts_used: 5,
         all_hints: 2,
@@ -34,7 +34,7 @@ RSpec.describe Statistics do
     let(:player_4) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.last.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.last.to_s,
         all_attempts: 5,
         attempts_used: 3,
         all_hints: 1,
@@ -45,7 +45,7 @@ RSpec.describe Statistics do
     let(:player_5) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.last.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.last.to_s,
         all_attempts: 5,
         attempts_used: 1,
         all_hints: 1,
@@ -56,7 +56,7 @@ RSpec.describe Statistics do
     let(:player_6) do
       {
         name: '',
-        difficulty: Game::DIFFICULTIES.keys.last.to_s,
+        difficulty: Registration::DIFFICULTIES.keys.last.to_s,
         all_attempts: 5,
         attempts_used: 3,
         all_hints: 1,

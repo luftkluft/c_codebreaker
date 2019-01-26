@@ -11,7 +11,7 @@ RSpec.describe Uploader do
   let(:test_object) do
     {
       name: 'Name',
-      difficulty: Game::DIFFICULTIES.keys.first,
+      difficulty: Registration::DIFFICULTIES.keys.first,
       all_attempts: 15,
       attempts_used: 15,
       all_hints: 2,

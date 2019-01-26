@@ -69,4 +69,14 @@ class Output
   def command_int_error
     put_console(:command_int_error)
   end
+
+  def ask(phrase_key = nil, options = {})
+    put_console(phrase_key, options) if phrase_key
+    gets.chomp
+  end
+
+  def exit_from_game
+    goodbye_message
+    exit
+  end
 end
