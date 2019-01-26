@@ -1,4 +1,3 @@
-require 'pry'
 class Game
   COMMANDS = {
     start: 'start',
@@ -118,7 +117,6 @@ class Game
     @attempts = update_data[:attempts]
     @difficulty = Registration::DIFFICULTIES[@level.to_sym]
     @update_game = true
-    binding.pry
   end
 
   def rules
