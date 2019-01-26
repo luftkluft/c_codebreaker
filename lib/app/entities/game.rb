@@ -76,7 +76,6 @@ class Game
   def saved_data
     { name: @name, update_game: @update_game, difficulty: @difficulty,
       attempts: @attempts, hints: @hints, code: @code }
-      binding.pry
   end
 
   def handle_win
@@ -119,6 +118,7 @@ class Game
     @attempts = update_data[:attempts]
     @difficulty = Registration::DIFFICULTIES[@level.to_sym]
     @update_game = true
+    binding.pry
   end
 
   def rules
