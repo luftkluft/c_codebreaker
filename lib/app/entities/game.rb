@@ -20,6 +20,7 @@ class Game
     @validator = Validator.new
     @hint = Hint.new
     @registration = Registration.new
+    @name = 'Player'
   end
 
   def game_menu
