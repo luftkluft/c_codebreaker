@@ -31,6 +31,7 @@ class Registration
     @code = Array.new(DIGITS_COUNT) { rand(RANGE) }
     @hints = @code.sample(DIFFICULTIES[@level.to_sym][:hints])
     @attempts = (DIFFICULTIES[@level.to_sym])[:attempts]
+    @difficulty = DIFFICULTIES[@level.to_sym] if DIFFICULTIES[@level.to_sym]
     @output.put_storage(name: @name, level: @level,
                         attempts: @attempts,
                         code_array: @code,
