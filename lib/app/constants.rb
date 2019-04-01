@@ -1,0 +1,13 @@
+TEST_PATH = 'database/test.yml'.freeze
+SCORE_DATABASE = 'database/data.yml'.freeze
+TEST_LEVEL = 'hell'.freeze
+TEST_NAME = 'Name'.freeze
+TEST_NUMBER = '1234'.freeze
+YOUR_HINT_IS = 'Your hint is:'.freeze
+BUTTON_TEXT_TO_GAME = 'To Game!'.freeze
+UNKNOWN_MESSAGE = 'Unknown message!'.freeze
+HAVE_NO_HINTS = 'You have no hints!'.freeze
+OOPS = 'OOps!'.freeze
+TO_HOME = '/'.freeze
+HINT_NUMBER = /Hint number:/.freeze
+ANSWER = /[+-]/.freeze
