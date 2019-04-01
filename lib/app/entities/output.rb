@@ -1,12 +1,17 @@
 class Output
-  @@data = [Time.now.strftime('%d-%m-%Y %R')]
+  TEMP_FILE_NAME = 'database/temp'.freeze
+  def initialize
+    data = [Time.now.strftime('%d-%m-%Y %R')]
+    File.new(TEMP_FILE_NAME, 'w') unless File.exist?(TEMP_FILE_NAME)
+    File.open(TEMP_FILE_NAME, 'w') { |file| file.write(YAML.dump(data)) } unless File.size(TEMP_FILE_NAME).positive?
+  end
 
   def put_storage(data)
-    @@data = data
+    File.open(TEMP_FILE_NAME, 'w') { |file| file.write(YAML.dump(data)) }
   end
 
   def take_storage
-    @@data
+    YAML.load_file(File.open(TEMP_FILE_NAME))
   end
 
   def put_console(msg_name, hash = {})

@@ -39,6 +39,7 @@ class Uploader
 
   def send_lose_result(saved_data)
     lose_result = to_h(saved_data).update(code: saved_data[:code].join)
+    puts '+++++++send_lose_result in uploader++++++'
     @output.put_storage(lose_result)
   end
 
